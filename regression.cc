@@ -1,3 +1,4 @@
+#include <cstring>
 #include <iostream>
 #include "FileResult.h"
 #include "linear.h"
