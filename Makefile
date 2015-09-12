@@ -10,7 +10,7 @@ LFLAGS = -Wall $(DEBUG)
 	
 
 test:	regression
-	./regression out.csv 
+	./regression example.csv 
 
 regression : $(OBJS)
 	$(CC) $(LFLAGS) $(DEBUG)  $(OBJS) -o regression
