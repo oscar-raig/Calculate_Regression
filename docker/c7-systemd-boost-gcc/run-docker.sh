@@ -1,1 +1,1 @@
-docker run   -ti --entrypoint=/bin/bash  -v /Users/oscarraig/github-public/Calculate_Regression/:/home/  c7systemdboostgcc_calculateregression
+docker run   -ti --entrypoint=/bin/bash  -v /Users/oscarraig/github-public/Calculate_Regression/:/home/  local/c7-systemd-boost-gcc-gcv

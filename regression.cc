@@ -2,8 +2,10 @@
 #include <iostream>
 #include "FileResult.h"
 #include "linear.h"
+#include <log4cplus/logger.h>
 
 using namespace std;
+using namespace log4cplus;
 
 #define RANGE_SIMILAR 0.05
 
@@ -236,6 +238,7 @@ int PrintFinalResults(const double *x, const double *y,int nVectorLength, int nD
 
 int main( int argc, char *argv[] )
 {
+	Logger logger = Logger::getInstance(LOG4CPLUS_TEXT("main"));
 	bool bDeletePoints = true;
 	bool bPrintOnlyFile = false;
 	cout << "main>>" << endl;

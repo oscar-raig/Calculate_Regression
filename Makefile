@@ -10,10 +10,10 @@ LFLAGS = -Wall $(DEBUG)
 	
 
 test:	regression
-	./regression example.csv 
+	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ ./regression example.csv 
 
 regression : $(OBJS)
-	$(CC) $(LFLAGS) $(DEBUG)  $(OBJS) -o regression
+	$(CC) $(LFLAGS) $(DEBUG)  $(OBJS) -llog4cplus -o regression
 
 clean:
 	rm -f $(OBJS)

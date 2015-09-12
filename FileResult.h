@@ -15,8 +15,6 @@ public:
 	std::vector<double> m_X;
 	std::vector<double> m_Y;
 
-
-
 };
 
 
