@@ -1,8 +1,10 @@
 #include <cstring>
+#include <log4cplus/logger.h>
 #include <iostream>
 #include "FileResult.h"
 #include "linear.h"
-#include <log4cplus/logger.h>
+#include "UtilVector.hpp"
+
 
 using namespace std;
 using namespace log4cplus;
@@ -10,21 +12,7 @@ using namespace log4cplus;
 #define RANGE_SIMILAR 0.05
 
 
-void MoveArrayOnePositionLeft(double *x, double *y, int nPosition, int *nSize)
-{
-	int i = 0;
-	for ( i = nPosition-1; i < *nSize-1; i++)
-	{
-		x[i]=x[i+1];
-	}
-	
-	for ( i = nPosition-1; i < *nSize-1; i++)
-	{
-		y[i]=y[i+1];
-	}
 
-	*nSize= *nSize - 1;
-}
 
 bool Similar( double a, double b )
 {
@@ -52,7 +40,7 @@ void PurgeArrays( double *x, double *y, int *nSize )
 			cout << "The values " << fPrevious << " And " << y[nCounter] << " Are very similar "  << endl;
 			cout << "Then We Shal delete " << x[nCounter] << " Position "  << endl;
 			fPrevious = y[nCounter];
-			MoveArrayOnePositionLeft( x, y, nCounter, nSize);
+			UtilVector::MoveArrayOnePositionLeft( x, y, nCounter, nSize);
 			
 			
 		}
