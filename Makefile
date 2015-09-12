@@ -9,7 +9,7 @@ LFLAGS = -Wall $(DEBUG)
 	$(CC) $(CFLAGS) -c $< -o $@
 	
 
-test:	regression
+run_example:	regression
 	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ ./regression example.csv 
 
 regression : $(OBJS)
