@@ -1,3 +1,4 @@
+.DEFAULT_GOAL := test
 SRC_MODEL=../src/model/
 INCLUDE=$(SRC_MODEL)
 CFLAGS = -Wall  $(DEBUG) -I$(INCLUDE)

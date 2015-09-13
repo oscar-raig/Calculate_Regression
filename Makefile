@@ -1,3 +1,4 @@
+.DEFAULT_GOAL := run_example
 SRC_MODEL=src/model
 INCLUDE=$(SRC_MODEL)
 SOURCES=$(SRC_MODEL)/UtilVector.cc
