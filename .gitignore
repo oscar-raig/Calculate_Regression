@@ -11,3 +11,4 @@
 *.la
 *.a
 regression
+test/UtilVectorTest

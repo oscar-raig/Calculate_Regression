@@ -9,50 +9,7 @@
 using namespace std;
 using namespace log4cplus;
 
-#define RANGE_SIMILAR 0.05
 
-
-
-
-bool Similar( double a, double b )
-{
-	if ( fabs ( a - b ) < RANGE_SIMILAR)
-		return  true;
-	else
-		return 	false;
-}
-
-//
-// This Function Delete elements if they are very similar
-
-void PurgeArrays( double *x, double *y, int *nSize )
-{
-	cout << "PurgeArrays>>" << endl;
-	int nCounter = 0;
-
-	double fPrevious = y[nCounter];
-	nCounter++;
-	while ( nCounter  < *nSize )
-	{
-//		cout << "Counter " << nCounter << " Size " << *nSize << endl; 
-		if ( Similar(fPrevious,y[nCounter] ) )
-		{
-			cout << "The values " << fPrevious << " And " << y[nCounter] << " Are very similar "  << endl;
-			cout << "Then We Shal delete " << x[nCounter] << " Position "  << endl;
-			fPrevious = y[nCounter];
-			UtilVector::MoveArrayOnePositionLeft( x, y, nCounter, nSize);
-			
-			
-		}
-		else
-		{
-			fPrevious= y[nCounter];
-			nCounter++;
-		}	
-	}
-	
-	cout << "PurgeArrays<<" << endl;
-}
 
 #define MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT 0.000001
 
@@ -296,7 +253,7 @@ int main( int argc, char *argv[] )
 	int nSize =  File.m_X.size(); 
 	cout << "We have " << nSize << " elements" << endl;
 	
-	PurgeArrays( x, y, &nSize );
+	UtilVector::purgeSimilarConsecutiveElements( x, y, &nSize );
 	
 	cout << "And now we have only :"  << nSize <<  " elements" << endl;
 

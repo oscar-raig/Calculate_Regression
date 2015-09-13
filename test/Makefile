@@ -6,10 +6,10 @@ TARGET=UtilVectorTest
 SOURCES=$(SRC_MODEL)UtilVector.cc
 SOURCES+=UtilVectorTest.cc
 
-$(TARGET):
+$(TARGET): $(SOURCES)
 	g++ $(CFLAGS) -L $GTEST_HOME/lib -lgtest -lgtest_main -lpthread $(SOURCES) -o $(TARGET)
 
-run:
+test: $(TARGET)
 	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ ./$(TARGET)
 
 clean:
