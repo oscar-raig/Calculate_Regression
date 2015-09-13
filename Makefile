@@ -1,11 +1,13 @@
 .DEFAULT_GOAL := run_example
 SRC_MODEL=src/model
-INCLUDE=$(SRC_MODEL)
+SRC_APP=src/app
+SRC_IO=src/io
+INCLUDE=-I $(SRC_MODEL) -I$(SRC_IO)
 SOURCES=$(SRC_MODEL)/UtilVector.cc
-OBJS = regression.o FileResult.o $(SRC_MODEL)/UtilVector.o
+OBJS = $(SRC_APP)/regression.o $(SRC_IO)/FileResult.o $(SRC_MODEL)/UtilVector.o
 CC = c++
 DEBUG = -g
-CFLAGS = -Wall -c $(DEBUG) -I$(INCLUDE)
+CFLAGS = -Wall -c $(DEBUG) $(INCLUDE)
 LFLAGS = -Wall $(DEBUG)
 
 

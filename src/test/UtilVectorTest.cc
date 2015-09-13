@@ -122,5 +122,31 @@ TEST(purgeSimilarConsecutiveElements, not_purge_when_no_consecutive) {
 }
 
 
+TEST(CoefficientGetWorst, should_return_true_when_are_equals) {
+	double coefficientold = 0.0;
+	double coefficientnew = 0.0;
+	bool result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
+	ASSERT_TRUE(result);
+}
+
+TEST(CoefficientGetWorst, should_returnfalse_when_are_not_equals_and_new_x2_positive) {
+	double coefficientold = 0.0;
+	double coefficientnew = 0.0 + (2 * MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT);
+	bool result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
+	ASSERT_FALSE(result);
+}
+
+TEST(CoefficientGetWorst, should_return_true_when_are_not_equals_and_new_x2_negative) {
+	double coefficientold = 0.0;
+	double coefficientnew = 0.0 - (2 * MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT);
+	bool result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
+	ASSERT_TRUE(result);
+}
 
 
+TEST(CoefficientGetWorst, should_return_true_when_are_not_equals_and_new_not_enough_positve) {
+	double coefficientold = 0.0;
+	double coefficientnew = 0.0 + ( MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT);
+	bool result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
+	ASSERT_TRUE(result);
+}
