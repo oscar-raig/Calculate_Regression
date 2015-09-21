@@ -89,14 +89,6 @@ double getCoefficient()
   return m_coeff;
 }
 
-private:
-
-double m_a, m_b, m_coeff;
-};
-
-
-//! A static function implementing the Linear Class for one off calculations
-
 double Linear_once(int n, double *x, double *y, double a )
 {
   // This function is created to enable an Instant Calculator on CodeCogs. 
@@ -105,6 +97,13 @@ double Linear_once(int n, double *x, double *y, double a )
    Maths::Regression::Linear A(n, x, y);
    return A.getValue(a);
 }
+
+private:
+
+double m_a, m_b, m_coeff;
+};
+
+
 
 }
 

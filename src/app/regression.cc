@@ -2,7 +2,6 @@
 #include <log4cplus/logger.h>
 #include <iostream>
 #include "FileResult.h"
-#include "linear.h"
 #include "UtilVector.hpp"
 
 
@@ -12,88 +11,6 @@ using namespace log4cplus;
 
 
 
-
-void NextIteration( double *x, double *y, int *nEnd, int bDeletingFromEnd )
-{
-	(*nEnd)--;
-	if ( !bDeletingFromEnd )
-	{
-		cout << "Deleting x " << *x << " Deleting y " << *y << endl;
-		x++;
-		y++;
-	}
-}
-
-void RestoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y )
-{
-	cout << "Recovering " << nTimesWorst << " Elements" << endl; 
-	if ( bDeletingFromEnd )
-	{
-		( *nEnd ) = ( *nEnd ) + nTimesWorst;
-	}
-	else
-	{
-		( *nEnd ) = ( *nEnd ) + nTimesWorst;
-		x = x - ( nTimesWorst );
-		y = y - ( nTimesWorst );
-
-	}
-}
-
-
-
-void DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd, int bDeletingFromEnd )
-{
-	#define MAX_TIMES_WORST 2
-  	double 	CoefficientOld = 0.0;
-        double 	CoefficientCurrent = 0.0;
-
-        int 	nTimesWorst = 0;
-	cout << "DeleteBadPointsFromBeginingOrFromEnd>>" << endl; 
-	cout << "We are Deleting From " << (bDeletingFromEnd ? "End" : "Begin") << endl; 
-
-	cout << "First Element" << endl;
-	
-	Maths::Regression::Linear A( *nEnd, x, y );
-	CoefficientOld = A.getCoefficient( );
-	NextIteration( x, y, nEnd, bDeletingFromEnd );
-
-        while  ( *nEnd > 1 )
-        {
-			cout << "End :" << *nEnd << endl;
-                Maths::Regression::Linear A(*nEnd, x, y);
-                cout << "Regression coefficient = " << A.getCoefficient() << endl;
-                CoefficientCurrent = A.getCoefficient();
-                if ( UtilVector::CoefficientGetWorst( CoefficientOld , CoefficientCurrent ) )
-                {
-			cout << "We are getting worst " << nTimesWorst << endl;
- 
-                        if ( nTimesWorst > MAX_TIMES_WORST )
-                        {
-                                cout << "We are getting worst we quit" << endl;
-				RestoreDeletedValues( bDeletingFromEnd, nTimesWorst, nEnd, x, y );
-                                break;
-                        }
-                        nTimesWorst++;
-                }
-                else
-		{
-			cout << "We are Not getting worst Old: " << CoefficientOld << " Current: " << CoefficientCurrent << endl;
-                        nTimesWorst=0;
-		//	break;
-		}
-		// We store the coeficient
-                CoefficientOld = CoefficientCurrent;
-		// The Old Coeficient < CoefficientOld
-
-		NextIteration( x, y, nEnd, bDeletingFromEnd );
-
-		cout << "Deleting one position " << endl;
-
-        }
-	cout << "DeleteBadPointsFromBeginingOrFromEnd<<" << endl;
-  	
-}
 
 
 // Introduce an intermediate, understandble abstraction
@@ -214,10 +131,10 @@ int main( int argc, char *argv[] )
 	int nDeletedFromBegin = 0;
 	if ( bDeletePoints )
 	{
-		DeleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 1);
+		UtilVector::DeleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 1);
 		nFreezeEnd = nFreezeEnd - nSize;
 		nDeletedFromBegin = nSize;
-		DeleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 0);
+		UtilVector::DeleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 0);
 		nDeletedFromBegin = nDeletedFromBegin - nSize;
 	}
 	
