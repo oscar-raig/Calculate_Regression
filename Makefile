@@ -24,6 +24,10 @@ run_example:	regression
 $(TARGET) : $(OBJS)
 	$(CC) $(LFLAGS) $(DEBUG)  $(OBJS) -llog4cplus -o $(TARGET)
 
+test:
+	make -C src/test
+
 clean:
 	rm -f $(OBJS)
-	rm $(TARGET)
+	rm -f $(TARGET)
+	make -C src/test clean
