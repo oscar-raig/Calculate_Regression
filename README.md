@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/oscar-raig/Calculate_Regression.svg?branch=master)](https://travis-ci.org/oscar-raig/Calculate_Regression)
+
 Calculate_Regression
 ====================
 
