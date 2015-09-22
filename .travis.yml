@@ -7,7 +7,6 @@ services:
 
 before_install:
 - docker pull oscarraig/c7-boost-gtest
-- docker run -v `pwd`:/home/ oscarraig/c7-boost-gtest  /bin/sh -c "cd /home; ./configure && make && make test"
 
 script:
-- cd /home; ./configure && make && make test
+- docker run -v `pwd`:/home/ oscarraig/c7-boost-gtest  /bin/sh -c "cd /home; ./configure && make && make test"
