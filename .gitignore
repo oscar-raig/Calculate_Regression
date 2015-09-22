@@ -11,4 +11,4 @@
 *.la
 *.a
 regression
-test/UtilVectorTest
+src/test/UtilVectorTest
