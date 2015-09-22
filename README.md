@@ -12,3 +12,9 @@ The regression coefficient indicates how well linear regression fits to the orig
 The program removes some data numbers if the coefficient regression get worst, with these numbers.
 
 Then, you get "clean data", without points that generate the bad coefficient.
+
+Example:
+
+Pairs (1,1) (2,2) ( 3,3 ) (4,7) (5,5) (6,6)
+
+Should delete (4,7)

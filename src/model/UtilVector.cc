@@ -39,9 +39,9 @@ void UtilVector::DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
 {
 	#define MAX_TIMES_WORST 2
   	double 	CoefficientOld = 0.0;
-        double 	CoefficientCurrent = 0.0;
+    double 	CoefficientCurrent = 0.0;
 
-        int 	nTimesWorst = 0;
+    int 	nTimesWorst = 0;
 	cout << "DeleteBadPointsFromBeginingOrFromEnd>>" << endl; 
 	cout << "We are Deleting From " << (bDeletingFromEnd ? "End" : "Begin") << endl; 
 
@@ -51,37 +51,28 @@ void UtilVector::DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
 	CoefficientOld = A.getCoefficient( );
 	NextIteration( x, y, nEnd, bDeletingFromEnd );
 
-        while  ( *nEnd > 1 )
-        {
+        while  ( *nEnd > 1 ){
 			cout << "End :" << *nEnd << endl;
-                Maths::Regression::Linear A(*nEnd, x, y);
-                cout << "Regression coefficient = " << A.getCoefficient() << endl;
-                CoefficientCurrent = A.getCoefficient();
-                if ( UtilVector::CoefficientGetWorst( CoefficientOld , CoefficientCurrent ) )
-                {
-			cout << "We are getting worst " << nTimesWorst << endl;
- 
-                        if ( nTimesWorst > MAX_TIMES_WORST )
-                        {
-                                cout << "We are getting worst we quit" << endl;
-				RestoreDeletedValues( bDeletingFromEnd, nTimesWorst, nEnd, x, y );
-                                break;
-                        }
-                        nTimesWorst++;
+            Maths::Regression::Linear A(*nEnd, x, y);
+            cout << "Regression coefficient = " << A.getCoefficient() << endl;
+            CoefficientCurrent = A.getCoefficient();
+            if ( UtilVector::CoefficientGetWorst( CoefficientOld , CoefficientCurrent ) ) {
+				cout << "We are getting worst " << nTimesWorst << endl;
+                if ( nTimesWorst > MAX_TIMES_WORST ) {
+                        cout << "We are getting worst we quit" << endl;
+						RestoreDeletedValues( bDeletingFromEnd, nTimesWorst, nEnd, x, y );
+                        break;
                 }
-                else
-		{
-			cout << "We are Not getting worst Old: " << CoefficientOld << " Current: " << CoefficientCurrent << endl;
-                        nTimesWorst=0;
-		//	break;
-		}
-		// We store the coeficient
-                CoefficientOld = CoefficientCurrent;
-		// The Old Coeficient < CoefficientOld
+                nTimesWorst++;
+            } else {
+				//cout << "We are Not getting worst Old: " << CoefficientOld << " Current: " << CoefficientCurrent << endl;
+                nTimesWorst=0;
+			}
+		    CoefficientOld = CoefficientCurrent;
+		
+			NextIteration( x, y, nEnd, bDeletingFromEnd );
 
-		NextIteration( x, y, nEnd, bDeletingFromEnd );
-
-		cout << "Deleting one position " << endl;
+			cout << "Deleting one position " << endl;
 
         }
 	cout << "DeleteBadPointsFromBeginingOrFromEnd<<" << endl;
@@ -157,7 +148,14 @@ bool UtilVector::similar( double a, double b )
 bool UtilVector::CoefficientGetWorst( double OldCoefficient, double CurrentCoefficient )
 {
 	cout << "CoefficientGetWorst>>" << endl;
-	if ( OldCoefficient > CurrentCoefficient  )
+	double difference =  OldCoefficient - CurrentCoefficient;
+
+	if(OldCoefficient == CurrentCoefficient) {
+		cout << "Coeficient equals =>not worst";
+		return false;
+	}
+
+	if( OldCoefficient > CurrentCoefficient )
         {
 		cout << "OldCoefficient  Greater than CurrentCoefficient  ==> We are getting worst" << OldCoefficient << " " << CurrentCoefficient << endl;
 	
@@ -183,7 +181,7 @@ bool UtilVector::CoefficientGetWorst( double OldCoefficient, double CurrentCoeff
 		cout << "CurrentCoefficient("  << CurrentCoefficient << ") Greater than OldCoeficient (" <<  OldCoefficient << ") We are Geting Better but how much better? " << OldCoefficient << endl;
 		if ( (  CurrentCoefficient - OldCoefficient  ) > MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT )
 		{
-			cout << "We are Get better yes  because OldCoefficient -  CurrentCoefficient " 
+			cout << "We are Get better yes  because CurrentCoefecient -  OldCoefficient " 
 			<< 	(  CurrentCoefficient - OldCoefficient ) << " is GreatER the " 
 			<<  MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT  << endl;  
 			cout << "CoefficientGetWorst<<" << endl;

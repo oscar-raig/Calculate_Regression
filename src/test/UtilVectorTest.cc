@@ -150,3 +150,14 @@ TEST(CoefficientGetWorst, should_return_true_when_are_not_equals_and_new_not_eno
 	bool result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
 	ASSERT_TRUE(result);
 }
+
+TEST(DeleteBadPointsFromBeginingOrFromEnd,if_something_get_wrost_delete) {
+	double x[6] = {0,1,2,3,4,5};
+	double y[6] = {0,1,2,3,7,5};
+	int size = 6;
+	UtilVector::DeleteBadPointsFromBeginingOrFromEnd(x,y,&size,true);
+
+	EXPECT_EQ(size,5);
+	EXPECT_EQ(x[5],5);
+
+}
