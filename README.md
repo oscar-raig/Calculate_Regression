@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/oscar-raig/Calculate_Regression.svg?branch=master)](https://travis-ci.org/oscar-raig/Calculate_Regression)
+
 Calculate_Regression
 ====================
 
@@ -9,4 +11,4 @@ The regression coefficient indicates how well linear regression fits to the orig
 2. STEP 2
 The program removes some data numbers if the coefficient regression get worst, with these numbers.
 
-Then, you obtain "clean data", without points that generate the bad coefficient.
+Then, you get "clean data", without points that generate the bad coefficient.
