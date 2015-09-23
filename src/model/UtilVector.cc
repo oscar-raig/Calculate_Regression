@@ -160,6 +160,7 @@ bool UtilVector::similar( double a, double b )
 
 int UtilVector::CoefficientGetWorst( double OldCoefficient, double CurrentCoefficient )
 {
+	LOG4CPLUS_INFO(logger,"CoefficientGetWorst");
 	cout << "CoefficientGetWorst>>" << endl;
 	double difference =  OldCoefficient - CurrentCoefficient;
 
