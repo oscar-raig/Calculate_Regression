@@ -8,7 +8,7 @@ OBJS = $(SRC_APP)/regression.o $(SRC_IO)/FileResult.o $(SRC_MODEL)/UtilVector.o
 CC = c++
 DEBUG = -g
 CFLAGS = -Wall -c $(DEBUG) $(INCLUDE)
-LFLAGS = -Wall $(DEBUG)
+LFLAGS = -Wall $(DEBUG) -llog4cplus
 
 
 
@@ -22,7 +22,7 @@ run_example:	regression
 	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ ./regression example.csv 
 
 $(TARGET) : $(OBJS)
-	$(CC) $(LFLAGS) $(DEBUG)  $(OBJS) -llog4cplus -o $(TARGET)
+	$(CC) $(LFLAGS) $(DEBUG)  $(OBJS)  -o $(TARGET)
 
 test:
 	make -C src/test

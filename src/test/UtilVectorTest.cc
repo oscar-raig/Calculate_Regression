@@ -122,42 +122,53 @@ TEST(purgeSimilarConsecutiveElements, not_purge_when_no_consecutive) {
 }
 
 
-TEST(CoefficientGetWorst, should_return_true_when_are_equals) {
+TEST(CoefficientGetWorst, should_return_EQUALS_when_are_equals) {
 	double coefficientold = 0.0;
 	double coefficientnew = 0.0;
-	bool result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
-	ASSERT_TRUE(result);
+	int result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
+	EXPECT_EQ(COEFFICIENT_EQUAL,result);
 }
 
-TEST(CoefficientGetWorst, should_returnfalse_when_are_not_equals_and_new_x2_positive) {
+TEST(CoefficientGetWorst, should_return_BETTER_when_are_not_equals_and_new_x2_positive) {
 	double coefficientold = 0.0;
 	double coefficientnew = 0.0 + (2 * MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT);
-	bool result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
-	ASSERT_FALSE(result);
+	int result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
+	EXPECT_EQ(COEFFICIENT_BETTER,result);
 }
 
-TEST(CoefficientGetWorst, should_return_true_when_are_not_equals_and_new_x2_negative) {
+TEST(CoefficientGetWorst, should_return_WORST_when_are_not_equals_and_new_x2_negative) {
 	double coefficientold = 0.0;
 	double coefficientnew = 0.0 - (2 * MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT);
-	bool result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
-	ASSERT_TRUE(result);
+	int result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
+	EXPECT_EQ(result,COEFFICIENT_WORST);
 }
 
 
-TEST(CoefficientGetWorst, should_return_true_when_are_not_equals_and_new_not_enough_positve) {
+TEST(CoefficientGetWorst, should_return_EQUALS_when_are_not_equals_and_new_not_enough_positve) {
 	double coefficientold = 0.0;
 	double coefficientnew = 0.0 + ( MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT);
-	bool result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
-	ASSERT_TRUE(result);
+	int result = UtilVector::CoefficientGetWorst(coefficientold,coefficientnew);
+	EXPECT_EQ(result,COEFFICIENT_EQUAL);
+}
+
+TEST(DeleteBadPointsFromBeginingOrFromEnd,if_something_not_get_wrost_not_delete) {
+	double x[7] = {0,1,2,3,4,5,6};
+	double y[7] = {0.5,1.8,7,3,4,5,6};
+	int size = 7;
+	UtilVector::DeleteBadPointsFromBeginingOrFromEnd(x,y,&size,true);
+
+	EXPECT_EQ(size,7);
+
+
 }
 
 TEST(DeleteBadPointsFromBeginingOrFromEnd,if_something_get_wrost_delete) {
-	double x[6] = {0,1,2,3,4,5};
-	double y[6] = {0,1,2,3,7,5};
-	int size = 6;
+	double x[7] = {0,1,2,3,4,5,6};
+	double y[7] = {0,1,2,3,4,7,6};
+	int size = 7;
 	UtilVector::DeleteBadPointsFromBeginingOrFromEnd(x,y,&size,true);
 
 	EXPECT_EQ(size,5);
-	EXPECT_EQ(x[5],5);
 
 }
+
