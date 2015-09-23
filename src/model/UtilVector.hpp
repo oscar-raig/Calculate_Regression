@@ -18,7 +18,7 @@ public:
 	static void purgeSimilarConsecutiveElements( double *x, double *y, int *nSize );
 	static bool similar( double a, double b );
 	static int  CoefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
-	static void NextIteration( double *x, double *y, int *nEnd, int bDeletingFromEnd );
+	static void NextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd );
 	static void RestoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y );
 	static void DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd, int bDeletingFromEnd );
 };

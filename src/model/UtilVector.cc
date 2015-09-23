@@ -6,14 +6,14 @@
 using namespace std;
 
 
-void UtilVector::NextIteration( double *x, double *y, int *nEnd, int bDeletingFromEnd )
+void UtilVector::NextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd )
 {
 	(*nEnd)--;
 	if ( !bDeletingFromEnd )
 	{
-		cout << "Deleting x " << *x << " Deleting y " << *y << endl;
-		x++;
-		y++;
+		cout << "Deleting x " << **x << " Deleting y " << **y << endl;
+		(*x) = (*x) + 1;
+		(*y) = (*y) + 1;
 	}
 }
 
@@ -51,7 +51,7 @@ void UtilVector::DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
 	
 	Maths::Regression::Linear A( *nEnd, x, y );
 	CoefficientOld = A.getCoefficient( );
-	NextIteration( x, y, nEnd, bDeletingFromEnd );
+	NextIteration( &x, &y, nEnd, bDeletingFromEnd );
 
         while  ( *nEnd > 1 ){
 			cout << "End :" << *nEnd << endl;
@@ -83,7 +83,7 @@ void UtilVector::DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
 			}
 		    CoefficientOld = CoefficientCurrent;
 		
-			NextIteration( x, y, nEnd, bDeletingFromEnd );
+			NextIteration( &x, &y, nEnd, bDeletingFromEnd );
 
 			cout << "Deleting one position " << endl;
 

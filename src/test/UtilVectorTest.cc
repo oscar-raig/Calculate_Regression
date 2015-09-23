@@ -172,3 +172,25 @@ TEST(DeleteBadPointsFromBeginingOrFromEnd,if_something_get_wrost_delete) {
 
 }
 
+
+TEST(DeleteBadPointsFromBeginingOrFromEnd,if_something_not_get_wrost_not_delete_begining_from_begin) {
+	double x[7] = {0,1,2,3,4,5,6};
+	double y[7] = {0,1,2,3,4,5,6};
+	int size = 7;
+	UtilVector::DeleteBadPointsFromBeginingOrFromEnd(x,y,&size,false);
+
+	EXPECT_EQ(size,7);
+}
+
+
+TEST(DeleteBadPointsFromBeginingOrFromEnd,if_something_get_wrost_delete_begining_from_begin) {
+	double x[7] = {0,1,2,3,4,5,6};
+	double y[7] = {1,2,2,3,4,5,6};
+	int size = 7;
+	UtilVector::DeleteBadPointsFromBeginingOrFromEnd(x,y,&size,false);
+
+	EXPECT_EQ(size,5);
+
+}
+
+
