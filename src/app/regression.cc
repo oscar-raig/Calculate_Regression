@@ -1,5 +1,6 @@
 #include <cstring>
 #include <log4cplus/logger.h>
+#include <log4cplus/configurator.h>
 #include <iostream>
 #include "FileResult.h"
 #include "UtilVector.hpp"
@@ -53,7 +54,10 @@ int PrintFinalResults(const double *x, const double *y,int nVectorLength, int nD
 
 int main( int argc, char *argv[] )
 {
+	BasicConfigurator config;
+    config.configure();
 	Logger logger = Logger::getInstance(LOG4CPLUS_TEXT("main"));
+	LOG4CPLUS_ERROR(logger,"CoefficientGetWorst*********");
 	bool bDeletePoints = true;
 	bool bPrintOnlyFile = false;
 	cout << "main>>" << endl;
@@ -122,8 +126,10 @@ int main( int argc, char *argv[] )
 
 	int nSize =  File.m_X.size(); 
 	cout << "We have " << nSize << " elements" << endl;
+
+	UtilVector utilVector;  
 	
-	UtilVector::purgeSimilarConsecutiveElements( x, y, &nSize );
+	utilVector.purgeSimilarConsecutiveElements( x, y, &nSize );
 	
 	cout << "And now we have only :"  << nSize <<  " elements" << endl;
 
@@ -131,10 +137,10 @@ int main( int argc, char *argv[] )
 	int nDeletedFromBegin = 0;
 	if ( bDeletePoints )
 	{
-		UtilVector::DeleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 1);
+		utilVector.DeleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 1);
 		nFreezeEnd = nFreezeEnd - nSize;
 		nDeletedFromBegin = nSize;
-		UtilVector::DeleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 0);
+		utilVector.DeleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 0);
 		nDeletedFromBegin = nDeletedFromBegin - nSize;
 	}
 	

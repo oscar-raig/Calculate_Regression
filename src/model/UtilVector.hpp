@@ -15,13 +15,16 @@ using namespace log4cplus;
 class UtilVector {
 	Logger logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
 public:	
-	static void moveArrayOnePositionLeft(double *x, double *y, int nPosition, int *nSize);
-	static void purgeSimilarConsecutiveElements( double *x, double *y, int *nSize );
-	static bool similar( double a, double b );
-	static int  CoefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
-	static void NextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd );
-	static void RestoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y );
-	static void DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd, int bDeletingFromEnd );
+	UtilVector(){
+		logger.setLogLevel(INFO_LOG_LEVEL);
+	}
+	void moveArrayOnePositionLeft(double *x, double *y, int nPosition, int *nSize);
+	void purgeSimilarConsecutiveElements( double *x, double *y, int *nSize );
+	bool similar( double a, double b );
+	int  CoefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
+	void NextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd );
+	void RestoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y );
+		void DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd, int bDeletingFromEnd );
 };
 
 
