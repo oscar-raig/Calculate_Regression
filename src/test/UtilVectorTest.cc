@@ -219,4 +219,27 @@ TEST_F(UtilVectorTest,DeleteBadPointsFromBeginingOrFromEnd_if_something_get_wros
 
 }
 
+TEST_F(UtilVectorTest,purgeSimilarConsecutiveElements_if_vector_have_similar_values_should_remove_elements) {
+	double x[7] = {0,1,2,3,4,5,6};
+	double y[7] = {1,2,2,2,2,5,6};
+	int size = 7;
+	utilVector.purgeSimilarConsecutiveElements(x,y,&size);
+
+	EXPECT_EQ(size,4);
+	EXPECT_EQ(y[0],1);
+	EXPECT_EQ(y[1],2);
+	EXPECT_EQ(y[2],5);
+	EXPECT_EQ(y[3],6);
+
+}
+TEST_F(UtilVectorTest,purgeSimilarConsecutiveElements_if_vector_have_NO_similar_values_should_NOT_remove_elements) {
+	double x[7] = {0,1,2,3,4,5,6};
+	double y[7] = {1,2,3,4,5,6,7};
+	int size = 7;
+	utilVector.purgeSimilarConsecutiveElements(x,y,&size);
+
+	EXPECT_EQ(size,7);
+	
+}
+
 
