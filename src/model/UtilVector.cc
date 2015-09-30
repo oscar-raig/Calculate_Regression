@@ -6,7 +6,7 @@
 using namespace std;
 
 
-void UtilVector::NextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd )
+void UtilVector::nextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd )
 {
 	(*nEnd)--;
 	if ( !bDeletingFromEnd )
@@ -17,7 +17,7 @@ void UtilVector::NextIteration( double **x, double **y, int *nEnd, int bDeleting
 	}
 }
 
-void UtilVector::RestoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y )
+void UtilVector::restoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y )
 {
 	cout << "Recovering " << nTimesWorst << " Elements" << endl; 
 	if ( bDeletingFromEnd )
@@ -35,7 +35,7 @@ void UtilVector::RestoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, i
 
 
 
-void UtilVector::DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd, int bDeletingFromEnd )
+void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd, int bDeletingFromEnd )
 {
 	#define MAX_TIMES_WORST 1
 	#define MAX_TIMES_EQUAL 1
@@ -51,20 +51,20 @@ void UtilVector::DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
 	
 	Maths::Regression::Linear A( *nEnd, x, y );
 	CoefficientOld = A.getCoefficient( );
-	NextIteration( &x, &y, nEnd, bDeletingFromEnd );
+	nextIteration( &x, &y, nEnd, bDeletingFromEnd );
 
         while  ( *nEnd > 1 ){
 			cout << "End :" << *nEnd << endl;
             Maths::Regression::Linear A(*nEnd, x, y);
             cout << "Regression coefficient = " << A.getCoefficient() << endl;
             CoefficientCurrent = A.getCoefficient();
-            int result = UtilVector::CoefficientGetWorst( CoefficientOld , CoefficientCurrent );
+            int result = UtilVector::coefficientGetWorst( CoefficientOld , CoefficientCurrent );
             if ( COEFFICIENT_WORST == result  ) {
 				cout << "We are getting worst " << timesWorst << " with position: " << *nEnd << " value: " << y[*nEnd] << endl;
                  timesWorst++;
                 if ( timesWorst > MAX_TIMES_WORST ) {
                         cout << "We are getting worst we quit" << endl;
-						RestoreDeletedValues( bDeletingFromEnd, timesWorst, nEnd, x, y );
+						restoreDeletedValues( bDeletingFromEnd, timesWorst, nEnd, x, y );
                         break;
                 }
                
@@ -74,7 +74,7 @@ void UtilVector::DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
                 timesEqual++;
                 if( timesEqual > MAX_TIMES_EQUAL ) {
                 	cout << "Max times equal we quit" << endl;
-                	RestoreDeletedValues( bDeletingFromEnd, timesEqual, nEnd, x, y );
+                	restoreDeletedValues( bDeletingFromEnd, timesEqual, nEnd, x, y );
                 	break;
 
                 }
@@ -83,7 +83,7 @@ void UtilVector::DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
 			}
 		    CoefficientOld = CoefficientCurrent;
 		
-			NextIteration( &x, &y, nEnd, bDeletingFromEnd );
+			nextIteration( &x, &y, nEnd, bDeletingFromEnd );
 
 			cout << "Deleting one position " << endl;
 
@@ -128,9 +128,7 @@ void UtilVector::purgeSimilarConsecutiveElements( double *x, double *y, int *nSi
 			cout << "The values " << fPrevious << " And " << y[nCounter] << " Are very similar "  << endl;
 			cout << "Then We Shal delete " << x[nCounter] << " Position "  << endl;
 			fPrevious = y[nCounter];
-			UtilVector::moveArrayOnePositionLeft( x, y, nCounter, nSize);
-			
-			
+			UtilVector::moveArrayOnePositionLeft( x, y, nCounter, nSize);			
 		}
 		else
 		{
@@ -158,7 +156,7 @@ bool UtilVector::similar( double a, double b )
 
 
 
-int UtilVector::CoefficientGetWorst( double OldCoefficient, double CurrentCoefficient )
+int UtilVector::coefficientGetWorst( double OldCoefficient, double CurrentCoefficient )
 {
 	LOG4CPLUS_ERROR(logger,"CoefficientGetWorst*********");
 	cout << "CoefficientGetWorst>>" << endl;

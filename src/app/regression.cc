@@ -137,10 +137,10 @@ int main( int argc, char *argv[] )
 	int nDeletedFromBegin = 0;
 	if ( bDeletePoints )
 	{
-		utilVector.DeleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 1);
+		utilVector.deleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 1);
 		nFreezeEnd = nFreezeEnd - nSize;
 		nDeletedFromBegin = nSize;
-		utilVector.DeleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 0);
+		utilVector.deleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 0);
 		nDeletedFromBegin = nDeletedFromBegin - nSize;
 	}
 	

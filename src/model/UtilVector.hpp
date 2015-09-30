@@ -28,10 +28,10 @@ public:
 	void moveArrayOnePositionLeft(double *x, double *y, int nPosition, int *nSize);
 	void purgeSimilarConsecutiveElements( double *x, double *y, int *nSize );
 	bool similar( double a, double b );
-	int  CoefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
-	void NextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd );
-	void RestoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y );
-		void DeleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd, int bDeletingFromEnd );
+	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
+	void nextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd );
+	void restoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y );
+	void deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd, int bDeletingFromEnd );
 };
 
 

@@ -147,7 +147,7 @@ TEST_F(UtilVectorTest,CoefficientGetWorst_should_return_EQUALS_when_are_equals) 
 	UtilVector utilVector(NULL,NULL,0); 
 	double coefficientold = 0.0;
 	double coefficientnew = 0.0;
-	int result = utilVector.CoefficientGetWorst(coefficientold,coefficientnew);
+	int result = utilVector.coefficientGetWorst(coefficientold,coefficientnew);
 	EXPECT_EQ(COEFFICIENT_EQUAL,result);
 }
 
@@ -155,7 +155,7 @@ TEST_F(UtilVectorTest,CoefficientGetWorst_should_return_BETTER_when_are_not_equa
 	UtilVector utilVector(NULL,NULL,0);  
 	double coefficientold = 0.0;
 	double coefficientnew = 0.0 + (2 * MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT);
-	int result = utilVector.CoefficientGetWorst(coefficientold,coefficientnew);
+	int result = utilVector.coefficientGetWorst(coefficientold,coefficientnew);
 	EXPECT_EQ(COEFFICIENT_BETTER,result);
 }
 
@@ -163,7 +163,7 @@ TEST_F(UtilVectorTest,CoefficientGetWorst_should_return_WORST_when_are_not_equal
 	UtilVector utilVector(NULL,NULL,0); 
 	double coefficientold = 0.0;
 	double coefficientnew = 0.0 - (2 * MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT);
-	int result = utilVector.CoefficientGetWorst(coefficientold,coefficientnew);
+	int result = utilVector.coefficientGetWorst(coefficientold,coefficientnew);
 	EXPECT_EQ(result,COEFFICIENT_WORST);
 }
 
@@ -173,7 +173,7 @@ TEST_F(UtilVectorTest,CoefficientGetWorst_should_return_EQUALS_when_are_not_equa
 	double coefficientold = 0.0;
 	double coefficientnew = 0.0 + ( MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT);
 	UtilVector utilVector(NULL,NULL,0); 
-	int result = utilVector.CoefficientGetWorst(coefficientold,coefficientnew);
+	int result = utilVector.coefficientGetWorst(coefficientold,coefficientnew);
 	EXPECT_EQ(result,COEFFICIENT_EQUAL);
 }
 
@@ -183,7 +183,7 @@ TEST_F(UtilVectorTest,DeleteBadPointsFromBeginingOrFromEnd_if_something_not_get_
 	double y[7] = {0.5,1.8,7,3,4,5,6};
 	int size = 7;
 	UtilVector utilVector(x,y,size); 
-	utilVector.DeleteBadPointsFromBeginingOrFromEnd(x,y,&size,true);
+	utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y,&size,true);
 
 	EXPECT_EQ(size,7);
 
@@ -195,7 +195,7 @@ TEST_F(UtilVectorTest,DeleteBadPointsFromBeginingOrFromEnd_if_something_get_wros
 	double y[7] = {0,1,2,3,4,7,6};
 	int size = 7;
 	UtilVector utilVector(x,y,size); 
-	utilVector.DeleteBadPointsFromBeginingOrFromEnd(x,y,&size,true);
+	utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y,&size,true);
 
 	EXPECT_EQ(size,5);
 
@@ -208,7 +208,7 @@ TEST_F(UtilVectorTest,DeleteBadPointsFromBeginingOrFromEnd_if_something_not_get_
 	double y[7] = {0,1,2,3,4,5,6};
 	int size = 7;
 	UtilVector utilVector(x,y,size); 
-	utilVector.DeleteBadPointsFromBeginingOrFromEnd(x,y,&size,false);
+	utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y,&size,false);
 
 	EXPECT_EQ(size,7);
 }
@@ -220,7 +220,7 @@ TEST_F(UtilVectorTest,DeleteBadPointsFromBeginingOrFromEnd_if_something_get_wros
 	double y[7] = {1,2,2,3,4,5,6};
 	int size = 7;
 	UtilVector utilVector(x,y,size); 
-	utilVector.DeleteBadPointsFromBeginingOrFromEnd(x,y,&size,false);
+	utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y,&size,false);
 
 	EXPECT_EQ(size,5);
 

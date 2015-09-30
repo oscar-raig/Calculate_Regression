@@ -6,8 +6,9 @@ LFLAGS = -llog4cplus
 TARGET=UtilVectorTest
 SOURCES=$(SRC_MODEL)UtilVector.cc
 SOURCES+=UtilVectorTest.cc
+INCLUDE_FILES=$(SRC_MODEL)UtilVector.hpp
 
-$(TARGET): $(SOURCES)
+$(TARGET): $(SOURCES) $(INCLUDE_FILES)
 	g++ $(CFLAGS) $(LFLAGS) -L $GTEST_HOME/lib -lgtest -lgtest_main -lpthread $(SOURCES) -o $(TARGET)
 
 test: $(TARGET)
