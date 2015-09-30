@@ -127,7 +127,7 @@ int main( int argc, char *argv[] )
 	int nSize =  File.m_X.size(); 
 	cout << "We have " << nSize << " elements" << endl;
 
-	UtilVector utilVector;  
+	UtilVector utilVector(x, y, nSize);  
 	
 	utilVector.purgeSimilarConsecutiveElements( x, y, &nSize );
 	

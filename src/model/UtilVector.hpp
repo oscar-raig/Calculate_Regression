@@ -14,9 +14,16 @@ using namespace log4cplus;
 
 class UtilVector {
 	Logger logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
+	std::vector <double> x;
+	std::vector <double> y;
 public:	
-	UtilVector(){
+	UtilVector(double *x, double *y, int sizeOfArray){
 		logger.setLogLevel(INFO_LOG_LEVEL);
+		for (int i=0;i < sizeOfArray; i++) {
+			this->x.push_back(x[i]);
+			this->y.push_back(y[i]);
+		}
+
 	}
 	void moveArrayOnePositionLeft(double *x, double *y, int nPosition, int *nSize);
 	void purgeSimilarConsecutiveElements( double *x, double *y, int *nSize );
