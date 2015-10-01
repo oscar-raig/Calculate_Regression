@@ -11,7 +11,7 @@ GraphXYIterator::GraphXYIterator(std::vector<double> x,std::vector<double> y, in
 
 PointXY* GraphXYIterator::next() {
 
-	if ( position == graphSize) {
+	if (isEnd()) {
 		return NULL;
 	}
 
@@ -34,3 +34,23 @@ PointXY* GraphXYIterator::previous() {
 	return pointXY;
 }
 
+void GraphXYIterator::first() {
+	position = 0;
+}
+
+
+PointXY* GraphXYIterator::current() {
+
+	
+	PointXY *pointXY =  new PointXY(x[position],y[position]);
+
+	return pointXY;
+}
+
+bool GraphXYIterator::isEnd() {
+	return position == graphSize;
+} 
+
+bool GraphXYIterator::isBegin() {
+	return position == 0;
+} 

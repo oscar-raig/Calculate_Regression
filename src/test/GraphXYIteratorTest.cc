@@ -103,31 +103,124 @@ TEST (GraphXYIteratorTest,create_GraphXYIterator_and_get_2next_1previous_return_
 
 TEST (GraphXYIteratorTest,first_should_positionate_first_elem) {
 
-	EXPECT_EQ(2, 3);
+	int graphSize = 3;
+	std::vector<double> x;
+	std::vector<double> y;
+
+	x.push_back(1);
+	y.push_back(1);
+	x.push_back(2);
+	y.push_back(2);
+	x.push_back(3);
+	y.push_back(3);
+
+	GraphXYIterator graphXYIterator(x, y, graphSize);
+	graphXYIterator.next();
+	graphXYIterator.next();
+	graphXYIterator.first();
+	PointXY *pointXY = graphXYIterator.current();
+ 	
+  	EXPECT_EQ(1, pointXY->getX());
 }
 
 TEST (GraphXYIteratorTest,current_should_not_increment_position) {
 
-	EXPECT_EQ(2, 3);
+	int graphSize = 3;
+	std::vector<double> x;
+	std::vector<double> y;
+
+	x.push_back(1);
+	y.push_back(1);
+	x.push_back(2);
+	y.push_back(2);
+	x.push_back(3);
+	y.push_back(3);
+
+	GraphXYIterator graphXYIterator(x, y, graphSize);
+	graphXYIterator.next();
+	PointXY *pointXY = graphXYIterator.current();
+	 graphXYIterator.current();
+ 	
+  	EXPECT_EQ(2, pointXY->getX());
 }
 
 TEST (GraphXYIteratorTest,isEnd_should_true_if_we_are_at_the_end) {
 
-	EXPECT_EQ(2, 3);
+	int graphSize = 3;
+	std::vector<double> x;
+	std::vector<double> y;
+
+	x.push_back(1);
+	y.push_back(1);
+	x.push_back(2);
+	y.push_back(2);
+	x.push_back(3);
+	y.push_back(3);
+
+	GraphXYIterator graphXYIterator(x, y, graphSize);
+	graphXYIterator.next();
+	graphXYIterator.next();
+	graphXYIterator.next();
+	
+ 	
+  	EXPECT_EQ(true, graphXYIterator.isEnd());
 }
 
 TEST (GraphXYIteratorTest,isEnd_should_false_if_we_are_at_the_begin) {
 
-	EXPECT_EQ(2, 3);
+	int graphSize = 3;
+	std::vector<double> x;
+	std::vector<double> y;
+
+	x.push_back(1);
+	y.push_back(1);
+	x.push_back(2);
+	y.push_back(2);
+	x.push_back(3);
+	y.push_back(3);
+
+	GraphXYIterator graphXYIterator(x, y, graphSize);
+ 	
+  	EXPECT_EQ(false, graphXYIterator.isEnd());
 }
 
 TEST (GraphXYIteratorTest,isBegin_should_true_if_we_are_at_the_begin) {
 
-	EXPECT_EQ(2, 3);
+		int graphSize = 3;
+	std::vector<double> x;
+	std::vector<double> y;
+
+	x.push_back(1);
+	y.push_back(1);
+	x.push_back(2);
+	y.push_back(2);
+	x.push_back(3);
+	y.push_back(3);
+
+	GraphXYIterator graphXYIterator(x, y, graphSize);
+ 	
+  	EXPECT_EQ(true, graphXYIterator.isBegin());
 }
 TEST (GraphXYIteratorTest,isBegin_should_false_if_we_are_at_the_end) {
 
-	EXPECT_EQ(2, 3);
+		int graphSize = 3;
+	std::vector<double> x;
+	std::vector<double> y;
+
+	x.push_back(1);
+	y.push_back(1);
+	x.push_back(2);
+	y.push_back(2);
+	x.push_back(3);
+	y.push_back(3);
+
+	GraphXYIterator graphXYIterator(x, y, graphSize);
+	graphXYIterator.next();
+	graphXYIterator.next();
+	graphXYIterator.next();
+	
+ 	
+  	EXPECT_EQ(false, graphXYIterator.isBegin());
 }
 
 
