@@ -12,3 +12,4 @@
 *.a
 regression
 src/test/UtilVectorTest
+src/test/GraphXYIteratorTest

@@ -26,6 +26,8 @@ $(TARGET) : $(OBJS)
 
 test:
 	make -C src/test
+test_iterator:
+	make -C src/test test_iterator
 
 clean:
 	rm -f $(OBJS)
