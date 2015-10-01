@@ -76,7 +76,6 @@ TEST (GraphXYIteratorTest,create_GraphXYIterator_and_get_next_previous_return_fi
  	
   	EXPECT_EQ(1, point->getX());
 	
-	
 }
 
 TEST (GraphXYIteratorTest,create_GraphXYIterator_and_get_2next_1previous_return_second_elem) {
@@ -101,3 +100,35 @@ TEST (GraphXYIteratorTest,create_GraphXYIterator_and_get_2next_1previous_return_
 	
 	
 }
+
+TEST (GraphXYIteratorTest,first_should_positionate_first_elem) {
+
+	EXPECT_EQ(2, 3);
+}
+
+TEST (GraphXYIteratorTest,current_should_not_increment_position) {
+
+	EXPECT_EQ(2, 3);
+}
+
+TEST (GraphXYIteratorTest,isEnd_should_true_if_we_are_at_the_end) {
+
+	EXPECT_EQ(2, 3);
+}
+
+TEST (GraphXYIteratorTest,isEnd_should_false_if_we_are_at_the_begin) {
+
+	EXPECT_EQ(2, 3);
+}
+
+TEST (GraphXYIteratorTest,isBegin_should_true_if_we_are_at_the_begin) {
+
+	EXPECT_EQ(2, 3);
+}
+TEST (GraphXYIteratorTest,isBegin_should_false_if_we_are_at_the_end) {
+
+	EXPECT_EQ(2, 3);
+}
+
+
+
