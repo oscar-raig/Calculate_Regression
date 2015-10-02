@@ -13,3 +13,4 @@
 regression
 src/test/UtilVectorTest
 src/test/GraphXYIteratorTest
+src/test/PurgeGraphXYTest

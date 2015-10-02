@@ -4,6 +4,8 @@
 #include <iostream>
 #include "FileResult.h"
 #include "UtilVector.hpp"
+#include "GraphXY.hpp"
+#include "PurgeGraphXY.hpp"
 
 
 using namespace std;
@@ -127,9 +129,12 @@ int main( int argc, char *argv[] )
 	int nSize =  File.m_X.size(); 
 	cout << "We have " << nSize << " elements" << endl;
 
+
+
 	UtilVector utilVector(x, y, nSize);  
-	
-	utilVector.purgeSimilarConsecutiveElements( x, y, &nSize );
+	GraphXY graphXY;
+	PurgeGraphXY purgeGraphXY(&graphXY);
+	purgeGraphXY.purgeSimilarConsecutiveElements( x, y, &nSize );
 	
 	cout << "And now we have only :"  << nSize <<  " elements" << endl;
 
