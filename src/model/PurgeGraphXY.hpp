@@ -18,7 +18,9 @@ public:
 	};
 	bool similar( double a, double b );
 	GraphXY* purgeSimilarConsecutiveElements();	
-	GraphXY* moveArrayOnePositionLeft(int nPosition);
+	GraphXY* moveArrayOnePositionLeft(GraphXYIterator *iterator);
+	GraphXY* moveArrayOnePositionLeft(int position);
+	
 	GraphXY* getGraphXY() {
 		return graphXY;
 	}

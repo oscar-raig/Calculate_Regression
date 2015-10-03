@@ -12,7 +12,7 @@ public:
 	int getSize();
 
 	void addPoint(PointXY *pointXY);
-	void erase(int position);
+	void erase(GraphXYIterator *graphIterator);
 
 	GraphXYIterator * createIterator(int position){
 		return new GraphXYIterator(&graph,position);

@@ -21,9 +21,8 @@ void GraphXY::addPoint(PointXY *pointXY) {
 }
 
 
-void GraphXY::erase(int position) {
-	if( position < getSize()) {
-		graph.erase( graph.begin() + position);
-	}
+void GraphXY::erase(GraphXYIterator *graphIterator) {
+	
+	graph.erase( graphIterator->iterator);
 }
 

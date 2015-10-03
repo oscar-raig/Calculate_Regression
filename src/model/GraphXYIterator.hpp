@@ -5,11 +5,12 @@
 #include "PointXY.hpp"
 
 class GraphXYIterator {
-
+friend class GraphXY;
 private:
 
 	int position;
 	std::vector<PointXY> *graph;
+
 	std::vector<PointXY>::iterator iterator;
 
 public:

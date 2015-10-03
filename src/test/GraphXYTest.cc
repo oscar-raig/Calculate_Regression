@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "GraphXY.hpp"
+#include "GraphXYIterator.hpp"
 
 
 TEST(GraphXYTest,add_should_increase_size) {
@@ -18,7 +19,8 @@ TEST(GraphXYTest,erase_should_decrease_size) {
 	PointXY *pointXY = new PointXY(5.4,6.7);
 	graphXY->addPoint(pointXY);
 	int graphSize = graphXY->getSize();
-	graphXY->erase(0);
+	GraphXYIterator *iterator = graphXY->createIterator(0);
+	graphXY->erase(iterator);
 	EXPECT_EQ(graphSize -1 , graphXY->getSize() );
 
 
