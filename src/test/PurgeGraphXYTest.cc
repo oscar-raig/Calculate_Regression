@@ -5,7 +5,6 @@
 TEST(PurgeGraphXYTest,purge_a_graph_with_different_numbers_should_not_purge_anything) {
 	
 	double *x = NULL,*y = NULL;
-	GraphXY graphXY;
 	int nSize = 4;
 	x = (double*)malloc(nSize * sizeof(double));
 	y = (double*)malloc(nSize * sizeof(double));
@@ -16,9 +15,9 @@ TEST(PurgeGraphXYTest,purge_a_graph_with_different_numbers_should_not_purge_anyt
 	y[3]=4;
 	
 	PurgeGraphXY purgeGraphXY(x,y,nSize);
-  	purgeGraphXY.purgeSimilarConsecutiveElements( x, y, &nSize);	
+  	purgeGraphXY.purgeSimilarConsecutiveElements();	
 
-	EXPECT_EQ(4,nSize);
+	EXPECT_EQ(4,purgeGraphXY.getGraphXY()->getSize());
 }
 
 
@@ -30,8 +29,8 @@ TEST(PurgeGraphXYTest,moveArrayOnePositionLeft_should_decrement_size) {
 	x = (double*)malloc(nSize * sizeof(double));
 	y = (double*)malloc(nSize * sizeof(double));
 	PurgeGraphXY purgeGraphXY(x,y,nSize);
-  	purgeGraphXY.moveArrayOnePositionLeft( x, y, nCounter, &nSize);	
-  	EXPECT_EQ(nSize, 3);
+  	purgeGraphXY.moveArrayOnePositionLeft(1);	
+  	EXPECT_EQ(purgeGraphXY.getGraphXY()->getSize(), 3);
 	
 	free(x);
 	free(y);
@@ -40,7 +39,7 @@ TEST(PurgeGraphXYTest,moveArrayOnePositionLeft_should_decrement_size) {
 TEST(PurgeGraphXYTest,moveArrayOnePositionLeft_should_move_position) {
 	 
  	double *x = NULL,*y = NULL;
-	int nCounter = 1 ;
+	int nCounter = 0 ;
 	int nSize = 4;
 	
 	x = (double*)malloc(nSize * sizeof(double));
@@ -50,29 +49,29 @@ TEST(PurgeGraphXYTest,moveArrayOnePositionLeft_should_move_position) {
 	x[1]=2;
 	
 	PurgeGraphXY purgeGraphXY(x,y,nSize); 
-  	purgeGraphXY.moveArrayOnePositionLeft( x, y, nCounter, &nSize);	
-  	EXPECT_EQ(x[0], 2);
+  	GraphXY *graphXY = purgeGraphXY.moveArrayOnePositionLeft(nCounter);	
+  	EXPECT_EQ(graphXY->getPoint(0).getX(), 2);
 	
 	free(x);
 	free(y);
 }
 
 
-TEST(UtilVectorTest,similar_similar_should_return_true_when_similar) {
+TEST(PurgeGraphXYTest,similar_similar_should_return_true_when_similar) {
 	PurgeGraphXY purgeGraphXY(NULL,NULL,0);   
 	double x = 4;
 	double y = x + (RANGE_SIMILAR*0.9);
 	ASSERT_TRUE(purgeGraphXY.similar(x,y));		
 }
 
-TEST(UtilVectorTest,similar_similar_should_return_false_when_not_similar) {
+TEST(PurgeGraphXYTest,similar_similar_should_return_false_when_not_similar) {
 	PurgeGraphXY purgeGraphXY(NULL,NULL,0);  
 	double x = 4;
 	double y = x + (RANGE_SIMILAR*1.1);
 	ASSERT_FALSE(purgeGraphXY.similar(x,y));		
 }
 
-TEST(UtilVectorTest,purgeSimilarConsecutiveElements_purge_one_when_are_similar) {
+TEST(PurgeGraphXYTest,purgeSimilarConsecutiveElements_purge_one_when_are_similar) {
 
  	double *x = NULL,*y = NULL;
 	int size = 4;
@@ -84,14 +83,14 @@ TEST(UtilVectorTest,purgeSimilarConsecutiveElements_purge_one_when_are_similar) 
 	y[2]=1 +(RANGE_SIMILAR*2.1) ;
 	y[3]=1 +(RANGE_SIMILAR*3.1) ;
 	PurgeGraphXY purgeGraphXY(x,y,size); 
-  	purgeGraphXY.purgeSimilarConsecutiveElements( x, y,  &size);	
-  	EXPECT_EQ(size, 3);
+  	purgeGraphXY.purgeSimilarConsecutiveElements();	
+  	EXPECT_EQ(purgeGraphXY.getGraphXY()->getSize(), 3);
 	
 	free(x);
 	free(y);
 }
 
-TEST(UtilVectorTest,purgeSimilarConsecutiveElements_purge_two_when_are_similar) {
+TEST(PurgeGraphXYTest,purgeSimilarConsecutiveElements_purge_two_when_are_similar) {
 	
  	double *x = NULL,*y = NULL;
 	int size = 4;
@@ -103,8 +102,8 @@ TEST(UtilVectorTest,purgeSimilarConsecutiveElements_purge_two_when_are_similar) 
 	y[2]=1 +(RANGE_SIMILAR*2.1) ;
 	y[3]=y[2];
 	PurgeGraphXY purgeGraphXY(x,y,size); 
-  	purgeGraphXY.purgeSimilarConsecutiveElements( x, y,  &size);	
-  	EXPECT_EQ(size, 2);
+  	purgeGraphXY.purgeSimilarConsecutiveElements();	
+  	EXPECT_EQ(purgeGraphXY.getGraphXY()->getSize(), 2);
 	
 	free(x);
 	free(y);
@@ -112,7 +111,7 @@ TEST(UtilVectorTest,purgeSimilarConsecutiveElements_purge_two_when_are_similar) 
 
 
 
-TEST(UtilVectorTest,purgeSimilarConsecutiveElements_not_purge_when_no_consecutive) {
+TEST(PurgeGraphXYTest,purgeSimilarConsecutiveElements_not_purge_when_no_consecutive) {
 
  	double *x = NULL,*y = NULL;
 	int size = 4;
@@ -125,14 +124,14 @@ TEST(UtilVectorTest,purgeSimilarConsecutiveElements_not_purge_when_no_consecutiv
 	y[3]=1;
 	
 	PurgeGraphXY purgeGraphXY(x,y,size); 
-  	purgeGraphXY.purgeSimilarConsecutiveElements( x, y,  &size);	
-  	EXPECT_EQ(size, 4);
+  	purgeGraphXY.purgeSimilarConsecutiveElements();	
+  	EXPECT_EQ(purgeGraphXY.getGraphXY()->getSize(), 4);
 	
 	free(x);
 	free(y);
 }
 
-TEST(UtilVectorTest,purgeSimilarConsecutiveElements_not_purge_if_ar_not_similar) {
+TEST(PurgeGraphXYTest,purgeSimilarConsecutiveElements_not_purge_if_ar_not_similar) {
 	 
  	double *x = NULL,*y = NULL;
 	int size = 4;
@@ -145,36 +144,36 @@ TEST(UtilVectorTest,purgeSimilarConsecutiveElements_not_purge_if_ar_not_similar)
 	y[3]=1 +(RANGE_SIMILAR*3.1) ;
 	
 	PurgeGraphXY purgeGraphXY(x,y,size); 
-  	purgeGraphXY.purgeSimilarConsecutiveElements( x, y,  &size);	
-  	EXPECT_EQ(size, 4);
+  	purgeGraphXY.purgeSimilarConsecutiveElements();	
+  	EXPECT_EQ(purgeGraphXY.getGraphXY()->getSize(), 4);
 	
 	free(x);
 	free(y);
 }
 
-TEST(UtilVectorTest,purgeSimilarConsecutiveElements_if_vector_have_similar_values_should_remove_elements) {
+TEST(PurgeGraphXYTest,purgeSimilarConsecutiveElements_if_vector_have_similar_values_should_remove_elements) {
 	double x[7] = {0,1,2,3,4,5,6};
 	double y[7] = {1,2,2,2,2,5,6};
 	int size = 7;
 
 	PurgeGraphXY purgeGraphXY(x,y,size); 
-	purgeGraphXY.purgeSimilarConsecutiveElements(x,y,&size);
+	GraphXY *graphXY = purgeGraphXY.purgeSimilarConsecutiveElements();
 
-	EXPECT_EQ(size,4);
-	EXPECT_EQ(y[0],1);
-	EXPECT_EQ(y[1],2);
-	EXPECT_EQ(y[2],5);
-	EXPECT_EQ(y[3],6);
+	EXPECT_EQ(graphXY->getSize(),4);
+	EXPECT_EQ(graphXY->getPoint(0).getY(),1);
+	EXPECT_EQ(graphXY->getPoint(1).getY(),2);
+	EXPECT_EQ(graphXY->getPoint(2).getY(),5);
+	EXPECT_EQ(graphXY->getPoint(3).getY(),6);
 
 }
-TEST(UtilVectorTest,purgeSimilarConsecutiveElements_if_vector_have_NO_similar_values_should_NOT_remove_elements) {
+TEST(PurgeGraphXYTest,purgeSimilarConsecutiveElements_if_vector_have_NO_similar_values_should_NOT_remove_elements) {
 	double x[7] = {0,1,2,3,4,5,6};
 	double y[7] = {1,2,3,4,5,6,7};
 	int size = 7;
 	PurgeGraphXY purgeGraphXY(x,y,size); 
-	purgeGraphXY.purgeSimilarConsecutiveElements(x,y,&size);
+	purgeGraphXY.purgeSimilarConsecutiveElements();
 
-	EXPECT_EQ(size,7);
+	EXPECT_EQ(purgeGraphXY.getGraphXY()->getSize(),7);
 	
 }
 

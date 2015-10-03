@@ -2,8 +2,13 @@
 #include <vector>
 #include <iostream>
 #include "PurgeGraphXY.hpp"
+#include "GraphXYIterator.hpp"
 
 using namespace std;
+
+PurgeGraphXY::PurgeGraphXY(GraphXY *graphXY){
+	this->graphXY = graphXY;
+}
 
 bool PurgeGraphXY::similar( double a, double b )
 {
@@ -13,55 +18,52 @@ bool PurgeGraphXY::similar( double a, double b )
 		return 	false;
 }
 
-PurgeGraphXY::PurgeGraphXY(GraphXY *graphXY){
-	this->graphXY = graphXY;
-}
+
 
 //
 // This Function Delete elements if they are very similar
 
-void PurgeGraphXY::purgeSimilarConsecutiveElements( double *x, double *y, int *nSize )
+GraphXY* PurgeGraphXY::purgeSimilarConsecutiveElements()
 {
-	cout << "PurgeArrays>>" << endl;
-	int nCounter = 0;
+//	cout << "PurgeArrays>>" << endl;
+	GraphXYIterator *iterator = graphXY->createIterator(0);
+	iterator->first();
 
-	double fPrevious = y[nCounter];
-	nCounter++;
-	while ( nCounter  < *nSize )
+	double previousY =  iterator->current()->getY();
+	double currentY = iterator->next()->getY();
+	int nCounter = 1;
+	while ( !iterator->isEnd())
 	{
-//		cout << "Counter " << nCounter << " Size " << *nSize << endl; 
-		if ( similar(fPrevious,y[nCounter] ) )
+//		cout << "Counter " << nCounter << " Size " << graphXY->getSize() << endl; 
+		double currentY = iterator->current()->getY();
+		double currentX = iterator->current()->getX();
+		if ( similar(previousY,currentY ) )
 		{
-			std::cout << "The values " << fPrevious << " And " << y[nCounter] << " Are very similar "  << std::endl;
-			std::cout << "Then We Shal delete " << x[nCounter] << " Position "  << std::endl;
-			fPrevious = y[nCounter];
-			moveArrayOnePositionLeft( x, y, nCounter, nSize);			
+//			std::cout << "The values " << previousY << " And " << currentY << " Are very similar "  << std::endl;
+//			std::cout << "Then We Shal delete " << currentX << " Position "  << std::endl;
+			previousY = currentY;
+			moveArrayOnePositionLeft(nCounter);		
+			iterator = 	 graphXY->createIterator(nCounter) ;
 		}
 		else
 		{
-			fPrevious= y[nCounter];
+			previousY= currentY;
 			nCounter++;
+			iterator->next();
 		}	
 	}
 	
-	cout << "PurgeArrays<<" << endl;
+//	cout << "PurgeArrays<<" << endl;
+	return graphXY;
 }
 
 
-void PurgeGraphXY::moveArrayOnePositionLeft(double *x, double *y, int nPosition, int *nSize)
+GraphXY* PurgeGraphXY::moveArrayOnePositionLeft(int nPosition)
 {
-	int i = 0;
-	for ( i = nPosition-1; i < *nSize-1; i++)
-	{
-		x[i]=x[i+1];
-	}
 	
-	for ( i = nPosition-1; i < *nSize-1; i++)
-	{
-		y[i]=y[i+1];
-	}
+	graphXY->erase(nPosition);
 
-	*nSize= *nSize - 1;
+	return graphXY;
 }
 
 

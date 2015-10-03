@@ -9,14 +9,19 @@
 class PurgeGraphXY {
 
 private:
-	GraphXY *graphXY;
+	GraphXY* graphXY;
 
 public:
 	PurgeGraphXY(GraphXY *graphXY);
-	PurgeGraphXY(double *x, double *y, int size){};
+	PurgeGraphXY(double *x, double *y, int size){
+		graphXY = new GraphXY(x,y,size);
+	};
 	bool similar( double a, double b );
-	void purgeSimilarConsecutiveElements( double *x, double *y, int *nSize );	
-	void moveArrayOnePositionLeft(double *x, double *y, int nPosition, int *nSize);
+	GraphXY* purgeSimilarConsecutiveElements();	
+	GraphXY* moveArrayOnePositionLeft(int nPosition);
+	GraphXY* getGraphXY() {
+		return graphXY;
+	}
 
 };
 

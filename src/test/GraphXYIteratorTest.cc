@@ -15,7 +15,7 @@ TEST (GraphXYIteratorTest,create_GraphXYIterator_and_get_current_item_should_ret
 
 	GraphXYIterator graphXYIterator(x, y, graphSize);
 
-	PointXY* point = graphXYIterator.next();
+	PointXY* point = graphXYIterator.current();
  	
   	EXPECT_EQ(1, point->getX());
 	
@@ -139,7 +139,7 @@ TEST (GraphXYIteratorTest,current_should_not_increment_position) {
 	GraphXYIterator graphXYIterator(x, y, graphSize);
 	graphXYIterator.next();
 	PointXY *pointXY = graphXYIterator.current();
-	 graphXYIterator.current();
+	graphXYIterator.current();
  	
   	EXPECT_EQ(2, pointXY->getX());
 }

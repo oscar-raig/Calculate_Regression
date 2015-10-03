@@ -134,7 +134,7 @@ int main( int argc, char *argv[] )
 	UtilVector utilVector(x, y, nSize);  
 	GraphXY graphXY;
 	PurgeGraphXY purgeGraphXY(&graphXY);
-	purgeGraphXY.purgeSimilarConsecutiveElements( x, y, &nSize );
+	purgeGraphXY.purgeSimilarConsecutiveElements();
 	
 	cout << "And now we have only :"  << nSize <<  " elements" << endl;
 
