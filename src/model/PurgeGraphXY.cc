@@ -43,7 +43,6 @@ GraphXY* PurgeGraphXY::purgeSimilarConsecutiveElements()
 			std::cout << "Then We Shal delete " << currentX << " Position "  << std::endl;
 			previousY = currentY;
 			moveArrayOnePositionLeft(nCounter);		
-			iterator = 	 graphXY->createIterator(nCounter) ;
 		}
 		else
 		{
