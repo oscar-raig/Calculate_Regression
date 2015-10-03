@@ -21,31 +21,30 @@ void UtilVector::nextIteration( double **x, double **y, int *nEnd)
 	}
 }
 
-void UtilVector::restoreDeletedValues( int nTimesWorst, int *nEnd, double *x, double *y )
+void UtilVector::restoreDeletedValues(int numberElementsToRecover)
 {
-	cout << "Recovering " << nTimesWorst << " Elements" << endl; 
+	cout << "Recovering " << numberElementsToRecover << " Elements" << endl; 
 	if ( deletingFromEnd )
 	{
-		( *nEnd ) = ( *nEnd ) + nTimesWorst;
+		( *end ) = ( *end ) + numberElementsToRecover;
 	}
 	else
 	{
-		( *nEnd ) = ( *nEnd ) + nTimesWorst;
-		x = x - ( nTimesWorst );
-		y = y - ( nTimesWorst );
+		( *end ) = ( *end ) + numberElementsToRecover;
+		x = x - ( numberElementsToRecover );
+		y = y - ( numberElementsToRecover );
 
 	}
 }
 
 bool UtilVector::decideWithCoeffiecient(int result) {
-	bool endLoop = false;
    	if ( COEFFICIENT_WORST == result  ) {
 		cout << "We are getting worst " << timesWorst << " with position: " << *end << " value: " << y[*end] << endl;
 		timesWorst++;
 		if ( timesWorst > MAX_TIMES_WORST ) {
 		        cout << "We are getting worst we quit" << endl;
-				restoreDeletedValues(  timesWorst, end, x, y );
-		        endLoop = true;
+				restoreDeletedValues(timesWorst);
+		        return true;
 		}
            
     } else if (result == COEFFICIENT_EQUAL) {
@@ -54,14 +53,14 @@ bool UtilVector::decideWithCoeffiecient(int result) {
         timesEqual++;
         if( timesEqual > MAX_TIMES_EQUAL ) {
         	cout << "Max times equal we quit" << endl;
-        	restoreDeletedValues( timesEqual, end, x, y );
-        	endLoop = true;
+        	restoreDeletedValues(timesEqual);
+			return true;
 
         }
 	} else if ( result == COEFFICIENT_BETTER) {
 		timesWorst=0;
 	}
-	return endLoop;
+	return false;
 }
 
 void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd)
@@ -86,6 +85,7 @@ void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
 
         while  ( *nEnd > 1 ){
 			cout << "End :" << *nEnd << endl;
+			cout << "TimesWorst :" << timesWorst << endl;
             Maths::Regression::Linear A(*nEnd, x, y);
             cout << "Regression coefficient = " << A.getCoefficient() << endl;
             CoefficientCurrent = A.getCoefficient();
@@ -94,9 +94,7 @@ void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
          		break;
          	}
 		    CoefficientOld = CoefficientCurrent;
-		
 			nextIteration( &x, &y, nEnd );
-
 			cout << "Deleting one position " << endl;
 
         }
@@ -110,7 +108,7 @@ void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
 
 int UtilVector::coefficientGetWorst( double OldCoefficient, double CurrentCoefficient )
 {
-	LOG4CPLUS_ERROR(logger,"CoefficientGetWorst*********");
+	LOG4CPLUS_DEBUG(logger,"coefficientGetWorst>>");
 	cout << "CoefficientGetWorst>>" << endl;
 	
 

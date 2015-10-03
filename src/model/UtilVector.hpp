@@ -32,7 +32,7 @@ public:
 
 	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
 	void nextIteration( double **x, double **y, int *nEnd);
-	void restoreDeletedValues(  int nTimesWorst, int *nEnd, double *x, double *y );
+	void restoreDeletedValues(int numberElementsToRecover);
 	void deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd);
 	void setDirectionForDeleting(bool deletingFromEnd) {
 		this->deletingFromEnd = deletingFromEnd;		
