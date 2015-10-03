@@ -3,6 +3,7 @@
 #include <log4cplus/logger.h>
 #include <log4cplus/loggingmacros.h>
 #include "linear.h"
+#include "GraphXY.hpp"
 
 using namespace log4cplus;
 
@@ -14,22 +15,22 @@ using namespace log4cplus;
 
 class UtilVector {
 	Logger logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
-	std::vector <double> x;
-	std::vector <double> y;
+	GraphXY *graphXY;
+	bool deletingFromEnd;
 public:	
-	UtilVector(double *x, double *y, int sizeOfArray){
+	UtilVector(double *x, double *y, int sizeOfArray,bool deletingFromEnd){
 		logger.setLogLevel(INFO_LOG_LEVEL);
-		for (int i=0;i < sizeOfArray; i++) {
-			this->x.push_back(x[i]);
-			this->y.push_back(y[i]);
-		}
-
+		graphXY = new GraphXY(x,y,sizeOfArray);
+		this->deletingFromEnd = deletingFromEnd;
 	}
 
 	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
-	void nextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd );
-	void restoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y );
-	void deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd, int bDeletingFromEnd );
+	void nextIteration( double **x, double **y, int *nEnd);
+	void restoreDeletedValues(  int nTimesWorst, int *nEnd, double *x, double *y );
+	void deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd);
+	void setDirectionForDeleting(bool deletingFromEnd) {
+		this->deletingFromEnd = deletingFromEnd;
+	}
 };
 
 

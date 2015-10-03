@@ -131,7 +131,7 @@ int main( int argc, char *argv[] )
 
 
 
-	UtilVector utilVector(x, y, nSize);  
+	UtilVector utilVector(x, y, nSize,true);  
 	GraphXY graphXY(x, y, nSize);
 	PurgeGraphXY purgeGraphXY(&graphXY);
 	purgeGraphXY.purgeSimilarConsecutiveElements();
@@ -142,10 +142,11 @@ int main( int argc, char *argv[] )
 	int nDeletedFromBegin = 0;
 	if ( bDeletePoints )
 	{
-		utilVector.deleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 1);
+		utilVector.deleteBadPointsFromBeginingOrFromEnd( x, y, &nSize);
 		nFreezeEnd = nFreezeEnd - nSize;
 		nDeletedFromBegin = nSize;
-		utilVector.deleteBadPointsFromBeginingOrFromEnd( x, y, &nSize, 0);
+		utilVector.setDirectionForDeleting(false);
+		utilVector.deleteBadPointsFromBeginingOrFromEnd( x, y, &nSize);
 		nDeletedFromBegin = nDeletedFromBegin - nSize;
 	}
 	

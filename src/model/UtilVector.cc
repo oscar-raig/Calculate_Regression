@@ -7,10 +7,10 @@
 using namespace std;
 
 
-void UtilVector::nextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd )
+void UtilVector::nextIteration( double **x, double **y, int *nEnd)
 {
 	(*nEnd)--;
-	if ( !bDeletingFromEnd )
+	if ( !deletingFromEnd )
 	{
 		cout << "Deleting x " << **x << " Deleting y " << **y << endl;
 		(*x) = (*x) + 1;
@@ -18,10 +18,10 @@ void UtilVector::nextIteration( double **x, double **y, int *nEnd, int bDeleting
 	}
 }
 
-void UtilVector::restoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y )
+void UtilVector::restoreDeletedValues( int nTimesWorst, int *nEnd, double *x, double *y )
 {
 	cout << "Recovering " << nTimesWorst << " Elements" << endl; 
-	if ( bDeletingFromEnd )
+	if ( deletingFromEnd )
 	{
 		( *nEnd ) = ( *nEnd ) + nTimesWorst;
 	}
@@ -36,7 +36,7 @@ void UtilVector::restoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, i
 
 
 
-void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd, int bDeletingFromEnd )
+void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd)
 {
 	#define MAX_TIMES_WORST 1
 	#define MAX_TIMES_EQUAL 1
@@ -46,13 +46,13 @@ void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
     int 	timesWorst = 0;
     int		timesEqual = 0;
 	cout << "DeleteBadPointsFromBeginingOrFromEnd>>" << endl; 
-	cout << "We are Deleting From " << (bDeletingFromEnd ? "End" : "Begin") << endl; 
+	cout << "We are Deleting From " << (deletingFromEnd ? "End" : "Begin") << endl; 
 
 	cout << "First Element" << endl;
 	
 	Maths::Regression::Linear A( *nEnd, x, y );
 	CoefficientOld = A.getCoefficient( );
-	nextIteration( &x, &y, nEnd, bDeletingFromEnd );
+	nextIteration( &x, &y, nEnd);
 
         while  ( *nEnd > 1 ){
 			cout << "End :" << *nEnd << endl;
@@ -65,7 +65,7 @@ void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
                  timesWorst++;
                 if ( timesWorst > MAX_TIMES_WORST ) {
                         cout << "We are getting worst we quit" << endl;
-						restoreDeletedValues( bDeletingFromEnd, timesWorst, nEnd, x, y );
+						restoreDeletedValues(  timesWorst, nEnd, x, y );
                         break;
                 }
                
@@ -75,7 +75,7 @@ void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
                 timesEqual++;
                 if( timesEqual > MAX_TIMES_EQUAL ) {
                 	cout << "Max times equal we quit" << endl;
-                	restoreDeletedValues( bDeletingFromEnd, timesEqual, nEnd, x, y );
+                	restoreDeletedValues( timesEqual, nEnd, x, y );
                 	break;
 
                 }
@@ -84,7 +84,7 @@ void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
 			}
 		    CoefficientOld = CoefficientCurrent;
 		
-			nextIteration( &x, &y, nEnd, bDeletingFromEnd );
+			nextIteration( &x, &y, nEnd );
 
 			cout << "Deleting one position " << endl;
 
