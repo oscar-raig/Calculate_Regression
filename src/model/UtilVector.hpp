@@ -26,7 +26,6 @@ public:
 
 	}
 
-	void purgeSimilarConsecutiveElements( double *x, double *y, int *nSize );
 	bool similar( double a, double b );
 	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
 	void nextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd );
