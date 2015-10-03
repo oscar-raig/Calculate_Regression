@@ -26,7 +26,6 @@ public:
 
 	}
 
-	bool similar( double a, double b );
 	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
 	void nextIteration( double **x, double **y, int *nEnd, int bDeletingFromEnd );
 	void restoreDeletedValues( bool bDeletingFromEnd, int nTimesWorst, int *nEnd, double *x, double *y );
