@@ -6,6 +6,9 @@
 
 using namespace std;
 
+#define MAX_TIMES_WORST 1
+#define MAX_TIMES_EQUAL 1
+
 
 void UtilVector::nextIteration( double **x, double **y, int *nEnd)
 {
@@ -34,17 +37,44 @@ void UtilVector::restoreDeletedValues( int nTimesWorst, int *nEnd, double *x, do
 	}
 }
 
+bool UtilVector::decideWithCoeffiecient(int result) {
+	bool endLoop = false;
+   	if ( COEFFICIENT_WORST == result  ) {
+		cout << "We are getting worst " << timesWorst << " with position: " << *end << " value: " << y[*end] << endl;
+		timesWorst++;
+		if ( timesWorst > MAX_TIMES_WORST ) {
+		        cout << "We are getting worst we quit" << endl;
+				restoreDeletedValues(  timesWorst, end, x, y );
+		        endLoop = true;
+		}
+           
+    } else if (result == COEFFICIENT_EQUAL) {
+		//cout << "We are Not getting worst Old: " << CoefficientOld << " Current: " << CoefficientCurrent << endl;
+        timesWorst=0;
+        timesEqual++;
+        if( timesEqual > MAX_TIMES_EQUAL ) {
+        	cout << "Max times equal we quit" << endl;
+        	restoreDeletedValues( timesEqual, end, x, y );
+        	endLoop = true;
 
+        }
+	} else if ( result == COEFFICIENT_BETTER) {
+		timesWorst=0;
+	}
+	return endLoop;
+}
 
 void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd)
 {
-	#define MAX_TIMES_WORST 1
-	#define MAX_TIMES_EQUAL 1
+	
   	double 	CoefficientOld = 0.0;
     double 	CoefficientCurrent = 0.0;
+    this->x = x;
+    this->y = y;
+    this->end = nEnd;
 
-    int 	timesWorst = 0;
-    int		timesEqual = 0;
+    timesWorst = 0;
+    timesEqual = 0;
 	cout << "DeleteBadPointsFromBeginingOrFromEnd>>" << endl; 
 	cout << "We are Deleting From " << (deletingFromEnd ? "End" : "Begin") << endl; 
 
@@ -60,28 +90,9 @@ void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
             cout << "Regression coefficient = " << A.getCoefficient() << endl;
             CoefficientCurrent = A.getCoefficient();
             int result = UtilVector::coefficientGetWorst( CoefficientOld , CoefficientCurrent );
-            if ( COEFFICIENT_WORST == result  ) {
-				cout << "We are getting worst " << timesWorst << " with position: " << *nEnd << " value: " << y[*nEnd] << endl;
-                 timesWorst++;
-                if ( timesWorst > MAX_TIMES_WORST ) {
-                        cout << "We are getting worst we quit" << endl;
-						restoreDeletedValues(  timesWorst, nEnd, x, y );
-                        break;
-                }
-               
-            } else if (result == COEFFICIENT_EQUAL) {
-				//cout << "We are Not getting worst Old: " << CoefficientOld << " Current: " << CoefficientCurrent << endl;
-                timesWorst=0;
-                timesEqual++;
-                if( timesEqual > MAX_TIMES_EQUAL ) {
-                	cout << "Max times equal we quit" << endl;
-                	restoreDeletedValues( timesEqual, nEnd, x, y );
-                	break;
-
-                }
-			} else if ( result == COEFFICIENT_BETTER) {
-				timesWorst=0;
-			}
+         	if( decideWithCoeffiecient(result) ) {
+         		break;
+         	}
 		    CoefficientOld = CoefficientCurrent;
 		
 			nextIteration( &x, &y, nEnd );

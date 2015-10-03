@@ -17,6 +17,12 @@ class UtilVector {
 	Logger logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
 	GraphXY *graphXY;
 	bool deletingFromEnd;
+
+	double *x;
+	double *y;
+	int 	timesWorst;
+    int		timesEqual;
+    int *end;
 public:	
 	UtilVector(double *x, double *y, int sizeOfArray,bool deletingFromEnd){
 		logger.setLogLevel(INFO_LOG_LEVEL);
@@ -29,8 +35,11 @@ public:
 	void restoreDeletedValues(  int nTimesWorst, int *nEnd, double *x, double *y );
 	void deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd);
 	void setDirectionForDeleting(bool deletingFromEnd) {
-		this->deletingFromEnd = deletingFromEnd;
+		this->deletingFromEnd = deletingFromEnd;		
 	}
+
+private:
+	bool decideWithCoeffiecient(int result);
 };
 
 
