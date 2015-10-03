@@ -132,7 +132,7 @@ int main( int argc, char *argv[] )
 
 
 	UtilVector utilVector(x, y, nSize);  
-	GraphXY graphXY;
+	GraphXY graphXY(x, y, nSize);
 	PurgeGraphXY purgeGraphXY(&graphXY);
 	purgeGraphXY.purgeSimilarConsecutiveElements();
 	

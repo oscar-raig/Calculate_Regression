@@ -25,7 +25,7 @@ bool PurgeGraphXY::similar( double a, double b )
 
 GraphXY* PurgeGraphXY::purgeSimilarConsecutiveElements()
 {
-//	cout << "PurgeArrays>>" << endl;
+	cout << "PurgeArrays1>>" << endl;
 	GraphXYIterator *iterator = graphXY->createIterator(0);
 	iterator->first();
 
@@ -34,13 +34,13 @@ GraphXY* PurgeGraphXY::purgeSimilarConsecutiveElements()
 	int nCounter = 1;
 	while ( !iterator->isEnd())
 	{
-//		cout << "Counter " << nCounter << " Size " << graphXY->getSize() << endl; 
+		cout << "Counter " << nCounter << " Size " << graphXY->getSize() << endl; 
 		double currentY = iterator->current()->getY();
 		double currentX = iterator->current()->getX();
 		if ( similar(previousY,currentY ) )
 		{
-//			std::cout << "The values " << previousY << " And " << currentY << " Are very similar "  << std::endl;
-//			std::cout << "Then We Shal delete " << currentX << " Position "  << std::endl;
+			std::cout << "The values " << previousY << " And " << currentY << " Are very similar "  << std::endl;
+			std::cout << "Then We Shal delete " << currentX << " Position "  << std::endl;
 			previousY = currentY;
 			moveArrayOnePositionLeft(nCounter);		
 			iterator = 	 graphXY->createIterator(nCounter) ;
@@ -50,10 +50,11 @@ GraphXY* PurgeGraphXY::purgeSimilarConsecutiveElements()
 			previousY= currentY;
 			nCounter++;
 			iterator->next();
+			cout << "Current " << endl;
 		}	
 	}
 	
-//	cout << "PurgeArrays<<" << endl;
+	cout << "PurgeArrays<<" << endl;
 	return graphXY;
 }
 
