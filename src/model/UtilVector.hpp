@@ -40,7 +40,7 @@ public:
 		return graphXY;
 	}
 	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
-	void nextIteration( double **x, double **y, int *nEnd);
+	void nextIteration();
 	void restoreDeletedValues(int numberElementsToRecover);
 	GraphXY*  deleteBadPointsFromBeginingOrFromEnd( );
 	void setDirectionForDeleting(bool deletingFromEnd) {

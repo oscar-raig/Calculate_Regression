@@ -10,16 +10,16 @@ using namespace std;
 #define MAX_TIMES_EQUAL 1
 
 
-void UtilVector::nextIteration( double **x, double **y, int *nEnd)
+void UtilVector::nextIteration()
 {
-	(*nEnd)--;
+	(*end)--;
 	// Moving to graph delete Graph last element
 	// And pushing to stack
 	if ( !deletingFromEnd )
 	{
-		cout << "Deleting x " << **x << " Deleting y " << **y << endl;
-		(*x) = (*x) + 1;
-		(*y) = (*y) + 1;
+		cout << "Deleting x " << *x << " Deleting y " << *y << endl;
+		(x) = (x) + 1;
+		(y) = (y) + 1;
 		// Moving to graph delete Graph begining
 		// Pushing to stack
 	}
@@ -88,7 +88,7 @@ GraphXY*  UtilVector::deleteBadPointsFromBeginingOrFromEnd()
 	
 	Maths::Regression::Linear A( *end, x, y );
 	CoefficientOld = A.getCoefficient( );
-	nextIteration( &x, &y, end);
+	nextIteration();
 
     while  ( *end > 1 ){
 		cout << "End :" << *end << endl;
@@ -101,7 +101,7 @@ GraphXY*  UtilVector::deleteBadPointsFromBeginingOrFromEnd()
      		break;
      	}
 	    CoefficientOld = CoefficientCurrent;
-		nextIteration( &x, &y, end );
+		nextIteration( );
 		cout << "Deleting one position " << endl;
 
     }
