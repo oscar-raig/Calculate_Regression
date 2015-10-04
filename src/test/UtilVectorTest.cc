@@ -52,9 +52,10 @@ TEST_F(UtilVectorTest,DeleteBadPointsFromBeginingOrFromEnd_if_something_not_get_
 	double y[7] = {0.5,1.8,7,3,4,5,6};
 	int size = 7;
 	UtilVector utilVector(x,y,size,true); 
-	utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y,&size);
+	GraphXY *graphXY = utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y);
 
-	EXPECT_EQ(size,7);
+
+	EXPECT_EQ(graphXY->getSize(),7);
 
 
 }
@@ -64,9 +65,9 @@ TEST_F(UtilVectorTest,DeleteBadPointsFromBeginingOrFromEnd_if_something_get_wros
 	double y[7] = {0,1,2,3,4,7,6};
 	int size = 7;
 	UtilVector utilVector(x,y,size,true); 
-	utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y,&size);
+	GraphXY *graphXY = utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y);
 
-	EXPECT_EQ(size,5);
+	EXPECT_EQ(graphXY->getSize(),5);
 
 }
 
@@ -77,9 +78,9 @@ TEST_F(UtilVectorTest,DeleteBadPointsFromBeginingOrFromEnd_if_something_not_get_
 	double y[7] = {0,1,2,3,4,5,6};
 	int size = 7;
 	UtilVector utilVector(x,y,size,false); 
-	utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y,&size);
+	GraphXY *graphXY = utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y);
 
-	EXPECT_EQ(size,7);
+	EXPECT_EQ(graphXY->getSize(),7);
 }
 
 
@@ -89,9 +90,9 @@ TEST_F(UtilVectorTest,DeleteBadPointsFromBeginingOrFromEnd_if_something_get_wros
 	double y[7] = {1,2,2,3,4,5,6};
 	int size = 7;
 	UtilVector utilVector(x,y,size,false); 
-	utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y,&size);
+	GraphXY *graphXY = utilVector.deleteBadPointsFromBeginingOrFromEnd(x,y);
 
-	EXPECT_EQ(size,5);
+	EXPECT_EQ(graphXY->getSize(),5);
 
 }
 

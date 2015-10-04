@@ -63,14 +63,15 @@ bool UtilVector::decideWithCoeffiecient(int result) {
 	return false;
 }
 
-void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd)
+GraphXY*  UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y)
 {
 	
   	double 	CoefficientOld = 0.0;
     double 	CoefficientCurrent = 0.0;
     this->x = x;
     this->y = y;
-    this->end = nEnd;
+    end = new int;
+    *end = graphXY->getSize(); 
 
     timesWorst = 0;
     timesEqual = 0;
@@ -79,26 +80,28 @@ void UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  in
 
 	cout << "First Element" << endl;
 	
-	Maths::Regression::Linear A( *nEnd, x, y );
+	Maths::Regression::Linear A( *end, x, y );
 	CoefficientOld = A.getCoefficient( );
-	nextIteration( &x, &y, nEnd);
+	nextIteration( &x, &y, end);
 
-        while  ( *nEnd > 1 ){
-			cout << "End :" << *nEnd << endl;
-			cout << "TimesWorst :" << timesWorst << endl;
-            Maths::Regression::Linear A(*nEnd, x, y);
-            cout << "Regression coefficient = " << A.getCoefficient() << endl;
-            CoefficientCurrent = A.getCoefficient();
-            int result = UtilVector::coefficientGetWorst( CoefficientOld , CoefficientCurrent );
-         	if( decideWithCoeffiecient(result) ) {
-         		break;
-         	}
-		    CoefficientOld = CoefficientCurrent;
-			nextIteration( &x, &y, nEnd );
-			cout << "Deleting one position " << endl;
+    while  ( *end > 1 ){
+		cout << "End :" << *end << endl;
+		cout << "TimesWorst :" << timesWorst << endl;
+        Maths::Regression::Linear A(*end, x, y);
+        cout << "Regression coefficient = " << A.getCoefficient() << endl;
+        CoefficientCurrent = A.getCoefficient();
+        int result = UtilVector::coefficientGetWorst( CoefficientOld , CoefficientCurrent );
+     	if( decideWithCoeffiecient(result) ) {
+     		break;
+     	}
+	    CoefficientOld = CoefficientCurrent;
+		nextIteration( &x, &y, end );
+		cout << "Deleting one position " << endl;
 
-        }
+    }
 	cout << "DeleteBadPointsFromBeginingOrFromEnd<<" << endl;
+
+	return new GraphXY(x,y,*end);
   	
 }
 

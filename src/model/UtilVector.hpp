@@ -30,10 +30,13 @@ public:
 		this->deletingFromEnd = deletingFromEnd;
 	}
 
+	GraphXY* getGraphXYResult() {
+		return graphXY;
+	}
 	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
 	void nextIteration( double **x, double **y, int *nEnd);
 	void restoreDeletedValues(int numberElementsToRecover);
-	void deleteBadPointsFromBeginingOrFromEnd( double *x, double *y,  int *nEnd);
+	GraphXY*  deleteBadPointsFromBeginingOrFromEnd( double *x, double *y);
 	void setDirectionForDeleting(bool deletingFromEnd) {
 		this->deletingFromEnd = deletingFromEnd;		
 	}
