@@ -23,5 +23,33 @@ TEST(GraphXYTest,erase_should_decrease_size) {
 	graphXY->erase(iterator);
 	EXPECT_EQ(graphSize -1 , graphXY->getSize() );
 
+}
+
+TEST(GraphXYTest,iterator_should_return_first_point) {
+	GraphXY *graphXY = new GraphXY();
+	PointXY *pointXY = new PointXY(5.4,6.7);
+
+	graphXY->addPoint(pointXY);
+	graphXY->addPoint(new PointXY(2,2));
+	
+	GraphXYIterator *iterator = graphXY->createIterator(0);
+	
+	PointXY *pointXYRead = iterator->current();
+	EXPECT_EQ(pointXYRead->getX(),pointXY->getX());
+
+}
+
+
+TEST(GraphXYTest,addPoint_at_the_begining_should_works) {
+	GraphXY *graphXY = new GraphXY();
+	PointXY *pointXY = new PointXY(5.4,6.7);
+
+	graphXY->addPoint(pointXY);
+	graphXY->addPoint(new PointXY(2,2),0);
+	
+	GraphXYIterator *iterator = graphXY->createIterator(0);
+	
+	PointXY *pointXYRead = iterator->current();
+	EXPECT_EQ(2,pointXYRead->getX());
 
 }

@@ -20,6 +20,12 @@ void GraphXY::addPoint(PointXY *pointXY) {
 	graph.push_back(*pointXY);
 }
 
+void GraphXY::addPoint(PointXY *pointXY, int position) {
+	std::vector<PointXY>::iterator it;
+	it = graph.begin() + position;
+  	it = graph.insert ( it , *pointXY );
+}
+
 
 void GraphXY::erase(GraphXYIterator *graphIterator) {
 	

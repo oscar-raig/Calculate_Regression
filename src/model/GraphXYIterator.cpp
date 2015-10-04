@@ -48,6 +48,11 @@ void GraphXYIterator::first() {
 	iterator = graph->begin() + position;
 }
 
+void GraphXYIterator::end() {
+	position = graph->size();
+	iterator = graph->end();
+}
+
 
 PointXY* GraphXYIterator::current() {
 
@@ -57,7 +62,7 @@ PointXY* GraphXYIterator::current() {
 bool GraphXYIterator::isEnd() {
 //	cout << "isEnd:position" << position << endl;
 //	cout << "isEnd:size" << graph->size() << endl;
-	return (unsigned int)(position == graph->size());
+	return (((unsigned int)position) == graph->size());
 } 
 
 bool GraphXYIterator::isBegin() {

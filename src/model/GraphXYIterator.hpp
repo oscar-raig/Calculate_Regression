@@ -26,6 +26,8 @@ GraphXYIterator(std::vector<PointXY> *graph,int position){
 	PointXY* next();
 	PointXY* current();
 	PointXY* previous();
+
+	void end();
 	void first();
 	bool isEnd();
 	bool isBegin();

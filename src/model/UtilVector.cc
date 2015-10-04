@@ -13,11 +13,15 @@ using namespace std;
 void UtilVector::nextIteration( double **x, double **y, int *nEnd)
 {
 	(*nEnd)--;
+	// Moving to graph delete Graph last element
+	// And pushing to stack
 	if ( !deletingFromEnd )
 	{
 		cout << "Deleting x " << **x << " Deleting y " << **y << endl;
 		(*x) = (*x) + 1;
 		(*y) = (*y) + 1;
+		// Moving to graph delete Graph begining
+		// Pushing to stack
 	}
 }
 
@@ -27,12 +31,14 @@ void UtilVector::restoreDeletedValues(int numberElementsToRecover)
 	if ( deletingFromEnd )
 	{
 		( *end ) = ( *end ) + numberElementsToRecover;
+		// Moving to graph Pop to end
 	}
 	else
 	{
 		( *end ) = ( *end ) + numberElementsToRecover;
 		x = x - ( numberElementsToRecover );
 		y = y - ( numberElementsToRecover );
+		// Moving to graph Pop to begin
 
 	}
 }

@@ -17,6 +17,7 @@ class UtilVector {
 	Logger logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
 	GraphXY *graphXY;
 	bool deletingFromEnd;
+	
 
 	double *x;
 	double *y;
