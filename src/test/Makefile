@@ -6,7 +6,7 @@ LFLAGS = -llog4cplus -L $GTEST_HOME/lib -lgtest -lgtest_main -lpthread
 
 TARGET_UTILVECTOR_TEST=UtilVectorTest
 SOURCES_UTILVECTOR_TEST=$(SRC_MODEL)UtilVector.cc $(SRC_MODEL)GraphXY.cc 
-SOURCES_UTILVECTOR_TEST+=UtilVectorTest.cc
+SOURCES_UTILVECTOR_TEST+=UtilVectorTest.cc $(SRC_MODEL)DeletePointCommand.cc $(SRC_MODEL)GraphXYIterator.cpp
 
 INCLUDE_FILES=$(SRC_MODEL)UtilVector.hpp $(SRC_MODEL)GraphXY.hpp
 

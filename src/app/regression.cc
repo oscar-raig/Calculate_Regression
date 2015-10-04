@@ -142,13 +142,13 @@ int main( int argc, char *argv[] )
 	int nDeletedFromBegin = 0;
 	if ( bDeletePoints )
 	{
-		GraphXY* graphXY = utilVector.deleteBadPointsFromBeginingOrFromEnd( x, y);
+		GraphXY* graphXY = utilVector.deleteBadPointsFromBeginingOrFromEnd();
 		nSize = graphXY->getSize();
 		nFreezeEnd = nFreezeEnd - nSize;
 		nDeletedFromBegin = nSize;
 		utilVector.setDirectionForDeleting(false);
 		delete graphXY;
-		graphXY = utilVector.deleteBadPointsFromBeginingOrFromEnd( x, y);
+		graphXY = utilVector.deleteBadPointsFromBeginingOrFromEnd();
 		nSize = graphXY->getSize();
 		nDeletedFromBegin = nDeletedFromBegin - nSize;
 	}

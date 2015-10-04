@@ -4,6 +4,7 @@
 #include <log4cplus/loggingmacros.h>
 #include "linear.h"
 #include "GraphXY.hpp"
+#include "DeletePointCommand.hpp"
 
 using namespace log4cplus;
 
@@ -14,10 +15,10 @@ using namespace log4cplus;
 #define COEFFICIENT_EQUAL  2
 
 class UtilVector {
-	Logger logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
+	Logger logger;
 	GraphXY *graphXY;
 	bool deletingFromEnd;
-	
+	DeletePointCommand *deletePointCommand;
 
 	double *x;
 	double *y;
@@ -26,9 +27,13 @@ class UtilVector {
     int *end;
 public:	
 	UtilVector(double *x, double *y, int sizeOfArray,bool deletingFromEnd){
+		logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
+		this->x = x;
+    	this->y = y;
 		logger.setLogLevel(INFO_LOG_LEVEL);
 		graphXY = new GraphXY(x,y,sizeOfArray);
 		this->deletingFromEnd = deletingFromEnd;
+		deletePointCommand = new DeletePointCommand(graphXY,deletingFromEnd);
 	}
 
 	GraphXY* getGraphXYResult() {
@@ -37,7 +42,7 @@ public:
 	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
 	void nextIteration( double **x, double **y, int *nEnd);
 	void restoreDeletedValues(int numberElementsToRecover);
-	GraphXY*  deleteBadPointsFromBeginingOrFromEnd( double *x, double *y);
+	GraphXY*  deleteBadPointsFromBeginingOrFromEnd( );
 	void setDirectionForDeleting(bool deletingFromEnd) {
 		this->deletingFromEnd = deletingFromEnd;		
 	}

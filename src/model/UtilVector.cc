@@ -69,7 +69,7 @@ bool UtilVector::decideWithCoeffiecient(int result) {
 	return false;
 }
 
-GraphXY*  UtilVector::deleteBadPointsFromBeginingOrFromEnd( double *x, double *y)
+GraphXY*  UtilVector::deleteBadPointsFromBeginingOrFromEnd()
 {
 	
   	double 	CoefficientOld = 0.0;
