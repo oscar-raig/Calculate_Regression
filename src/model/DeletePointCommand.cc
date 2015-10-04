@@ -29,13 +29,14 @@ GraphXY* DeletePointCommand::execute() {
 	return graphXY;
 }
 
-GraphXY* DeletePointCommand::undo() {
+GraphXY* DeletePointCommand::undo(int numberElementsToRecover) {
 
 	if( pointStack.empty()) {
 		throw std::runtime_error( "ERROR: trying to undo an empty stack" );
 	}
 
-	while( !pointStack.empty()) {
+	int cnt = 0;
+	while( !pointStack.empty() && cnt < numberElementsToRecover) {
 		PointXY pointXY = pointStack.top();
 		pointStack.pop();
 		if (removeEnd) {
@@ -43,6 +44,7 @@ GraphXY* DeletePointCommand::undo() {
 		} else {
 			graphXY->addPoint(&pointXY,0);
 		}	
+		cnt++;
 	}	
 	return graphXY;
 }

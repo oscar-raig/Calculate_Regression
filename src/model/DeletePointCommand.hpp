@@ -11,6 +11,6 @@ private:
 public:
 	DeletePointCommand(GraphXY* graphXY,bool removeEnd);
 	GraphXY* execute();
-	GraphXY* undo();
+	GraphXY* undo(int numberElementsToRecover);
 
 };

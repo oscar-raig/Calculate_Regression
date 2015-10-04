@@ -19,17 +19,12 @@ class UtilVector {
 	GraphXY *graphXY;
 	bool deletingFromEnd;
 	DeletePointCommand *deletePointCommand;
-
-	double *x;
-	double *y;
 	int 	timesWorst;
     int		timesEqual;
     int *end;
 public:	
 	UtilVector(double *x, double *y, int sizeOfArray,bool deletingFromEnd){
 		logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
-		this->x = x;
-    	this->y = y;
 		logger.setLogLevel(INFO_LOG_LEVEL);
 		graphXY = new GraphXY(x,y,sizeOfArray);
 		this->deletingFromEnd = deletingFromEnd;
@@ -44,11 +39,12 @@ public:
 	void restoreDeletedValues(int numberElementsToRecover);
 	GraphXY*  deleteBadPointsFromBeginingOrFromEnd( );
 	void setDirectionForDeleting(bool deletingFromEnd) {
-		this->deletingFromEnd = deletingFromEnd;		
+		this->deletingFromEnd = deletingFromEnd;			
 	}
 
 private:
 	bool decideWithCoeffiecient(int result);
+	Maths::Regression::Linear calculateRegression();
 };
 
 

@@ -59,7 +59,7 @@ int main( int argc, char *argv[] )
 	BasicConfigurator config;
     config.configure();
 	Logger logger = Logger::getInstance(LOG4CPLUS_TEXT("main"));
-	LOG4CPLUS_ERROR(logger,"CoefficientGetWorst*********");
+	LOG4CPLUS_INFO(logger,"CoefficientGetWorst*********");
 	bool bDeletePoints = true;
 	bool bPrintOnlyFile = false;
 	cout << "main>>" << endl;
@@ -147,7 +147,7 @@ int main( int argc, char *argv[] )
 		nFreezeEnd = nFreezeEnd - nSize;
 		nDeletedFromBegin = nSize;
 		utilVector.setDirectionForDeleting(false);
-		delete graphXY;
+		LOG4CPLUS_INFO(logger,"Now we delete from end");
 		graphXY = utilVector.deleteBadPointsFromBeginingOrFromEnd();
 		nSize = graphXY->getSize();
 		nDeletedFromBegin = nDeletedFromBegin - nSize;

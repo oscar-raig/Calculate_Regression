@@ -32,12 +32,10 @@ GraphXY* PurgeGraphXY::purgeSimilarConsecutiveElements()
 	double currentY = iterator->next()->getY();
 	while ( !iterator->isEnd()) {
 		if (similar(previousY,currentY)) {
-			std::cout << "The values " << previousY << " And " << currentY << " Are very similar "  << std::endl;
 			moveArrayOnePositionLeft(iterator);		
 		}
 		else {
 			iterator->next();
-			cout << "Current " << endl;
 		}	
 		previousY= currentY;
 		currentY = iterator->current()->getY();

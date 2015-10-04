@@ -12,43 +12,47 @@ using namespace std;
 
 void UtilVector::nextIteration()
 {
-	(*end)--;
-	// Moving to graph delete Graph last element
-	// And pushing to stack
-	if ( !deletingFromEnd )
-	{
-		cout << "Deleting x " << *x << " Deleting y " << *y << endl;
-		(x) = (x) + 1;
-		(y) = (y) + 1;
-		// Moving to graph delete Graph begining
-		// Pushing to stack
-	}
+	deletePointCommand->execute();
+	LOG4CPLUS_DEBUG(logger,"UtilVector::nextIteration size: " << graphXY->getSize());
+
 }
 
 void UtilVector::restoreDeletedValues(int numberElementsToRecover)
 {
-	cout << "Recovering " << numberElementsToRecover << " Elements" << endl; 
-	if ( deletingFromEnd )
-	{
-		( *end ) = ( *end ) + numberElementsToRecover;
-		// Moving to graph Pop to end
-	}
-	else
-	{
-		( *end ) = ( *end ) + numberElementsToRecover;
-		x = x - ( numberElementsToRecover );
-		y = y - ( numberElementsToRecover );
-		// Moving to graph Pop to begin
+	LOG4CPLUS_DEBUG(logger,"UtilVector::restoreDeletedValues size: " << graphXY->getSize());
+	deletePointCommand->undo(numberElementsToRecover);
+	LOG4CPLUS_DEBUG(logger,"UtilVector::restoreDeletedValues size: " << graphXY->getSize());
+}
 
+Maths::Regression::Linear UtilVector::calculateRegression(){
+
+	LOG4CPLUS_DEBUG(logger,"UtilVector::calculateRegression>>");
+	double *xx = (double*) malloc(sizeof(double)*graphXY->getSize());
+	double *yy = (double*)malloc(sizeof(double)*graphXY->getSize());
+	GraphXYIterator *it = graphXY->createIterator(0);
+	PointXY * pointXY = it->current();
+	int vectorPosition = 0;
+
+	xx[vectorPosition] = pointXY->getX();
+	yy[vectorPosition] = pointXY->getY();
+	while( !it->isEnd()) {
+		xx[vectorPosition] = pointXY->getX();
+		yy[vectorPosition] = pointXY->getY();
+
+		pointXY = it->next();
+		vectorPosition++;
 	}
+
+
+	Maths::Regression::Linear A( graphXY->getSize(), xx, yy );
+	LOG4CPLUS_DEBUG(logger,"UtilVector::calculateRegression<<");
+	return A;
 }
 
 bool UtilVector::decideWithCoeffiecient(int result) {
    	if ( COEFFICIENT_WORST == result  ) {
-		cout << "We are getting worst " << timesWorst << " with position: " << *end << " value: " << y[*end] << endl;
 		timesWorst++;
 		if ( timesWorst > MAX_TIMES_WORST ) {
-		        cout << "We are getting worst we quit" << endl;
 				restoreDeletedValues(timesWorst);
 		        return true;
 		}
@@ -58,7 +62,6 @@ bool UtilVector::decideWithCoeffiecient(int result) {
         timesWorst=0;
         timesEqual++;
         if( timesEqual > MAX_TIMES_EQUAL ) {
-        	cout << "Max times equal we quit" << endl;
         	restoreDeletedValues(timesEqual);
 			return true;
 
@@ -74,40 +77,28 @@ GraphXY*  UtilVector::deleteBadPointsFromBeginingOrFromEnd()
 	
   	double 	CoefficientOld = 0.0;
     double 	CoefficientCurrent = 0.0;
-    this->x = x;
-    this->y = y;
     end = new int;
     *end = graphXY->getSize(); 
 
     timesWorst = 0;
     timesEqual = 0;
-	cout << "DeleteBadPointsFromBeginingOrFromEnd>>" << endl; 
-	cout << "We are Deleting From " << (deletingFromEnd ? "End" : "Begin") << endl; 
 
-	cout << "First Element" << endl;
 	
-	Maths::Regression::Linear A( *end, x, y );
-	CoefficientOld = A.getCoefficient( );
+	Maths::Regression::Linear regression = calculateRegression();
+	CoefficientOld = regression.getCoefficient( );
 	nextIteration();
 
     while  ( *end > 1 ){
-		cout << "End :" << *end << endl;
-		cout << "TimesWorst :" << timesWorst << endl;
-        Maths::Regression::Linear A(*end, x, y);
-        cout << "Regression coefficient = " << A.getCoefficient() << endl;
-        CoefficientCurrent = A.getCoefficient();
+        Maths::Regression::Linear regression = calculateRegression();
+        CoefficientCurrent = regression.getCoefficient();
         int result = UtilVector::coefficientGetWorst( CoefficientOld , CoefficientCurrent );
      	if( decideWithCoeffiecient(result) ) {
      		break;
      	}
 	    CoefficientOld = CoefficientCurrent;
 		nextIteration( );
-		cout << "Deleting one position " << endl;
-
     }
-	cout << "DeleteBadPointsFromBeginingOrFromEnd<<" << endl;
-
-	return new GraphXY(x,y,*end);
+	return graphXY;
   	
 }
 
@@ -118,24 +109,17 @@ GraphXY*  UtilVector::deleteBadPointsFromBeginingOrFromEnd()
 int UtilVector::coefficientGetWorst( double OldCoefficient, double CurrentCoefficient )
 {
 	LOG4CPLUS_DEBUG(logger,"coefficientGetWorst>>");
-	cout << "CoefficientGetWorst>>" << endl;
-	
 
 	if(OldCoefficient == CurrentCoefficient) {
-		cout << "Coeficient equals =>not worst";
+
 		return COEFFICIENT_EQUAL;
 	}
 
 	if( OldCoefficient > CurrentCoefficient )
         {
-		cout << "OldCoefficient  Greater than CurrentCoefficient  ==> We are getting worst " << OldCoefficient << " " << CurrentCoefficient << endl;
 	
 		if ( ( OldCoefficient - CurrentCoefficient ) > MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT )
 		{
-			cout << "We are Get worst because OldCoefficient -  CurrentCoefficient " 
-			<< 	( OldCoefficient -  CurrentCoefficient ) << " is GreatER the " 
-			<<  MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT  << endl;  
-			cout << "CoefficientGetWorst<<" << endl;
 			return COEFFICIENT_WORST;
 		}
 		else

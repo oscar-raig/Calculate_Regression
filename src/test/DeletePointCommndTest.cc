@@ -72,7 +72,7 @@ TEST(DeletePointCommand,undo_Command_leave_should_leave_things_like_at_the_begin
 
 	deletePointCommand->execute();
 
-	GraphXY *graphXYResult = deletePointCommand->undo();
+	GraphXY *graphXYResult = deletePointCommand->undo(1);
 
 	EXPECT_EQ( 2,graphXYResult->getSize());
 
@@ -109,7 +109,7 @@ TEST(DeletePointCommand,two_executes_and_one_unodo_should_leave_things_like_at_t
 
 	deletePointCommand->execute();
 
-	GraphXY *graphXYResult = deletePointCommand->undo();
+	GraphXY *graphXYResult = deletePointCommand->undo(2);
 
 	EXPECT_EQ( 2,graphXYResult->getSize());
 
