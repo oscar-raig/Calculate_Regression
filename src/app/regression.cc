@@ -131,7 +131,8 @@ int main( int argc, char *argv[] )
 
 
 	GraphXY graphXY(x, y, nSize);
-	UtilVector utilVector(&graphXY,true);  
+	DeletePointCommand *deletePointCommand = new DeletePointCommand(&graphXY, true);
+	UtilVector utilVector(deletePointCommand);  
 	
 	PurgeGraphXY purgeGraphXY(&graphXY);
 	purgeGraphXY.purgeSimilarConsecutiveElements();
@@ -146,8 +147,8 @@ int main( int argc, char *argv[] )
 		nSize = graphXY->getSize();
 		nFreezeEnd = nFreezeEnd - nSize;
 		nDeletedFromBegin = nSize;
-		utilVector.setDirectionForDeleting(false);
-		LOG4CPLUS_INFO(logger,"Now we delete from end");
+		//utilVector.setDirectionForDeleting(false);
+		LOG4CPLUS_ERROR(logger,"Now we delete from end Uff ....");
 		graphXY = utilVector.deleteBadPointsFromBeginingOrFromEnd();
 		nSize = graphXY->getSize();
 		nDeletedFromBegin = nDeletedFromBegin - nSize;

@@ -16,25 +16,22 @@ using namespace log4cplus;
 
 class UtilVector {
 	Logger 	logger;
-	GraphXY *graphXY;
-	bool 	deletingFromEnd;
 	DeletePointCommand *deletePointCommand;
 	int 	timesWorst;
     int		timesEqual;
 
 public:	
-	UtilVector(GraphXY *graphXY, bool deletingFromEnd){
+	UtilVector(DeletePointCommand *deletePointCommand){
 		logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
 		logger.setLogLevel(INFO_LOG_LEVEL);
-		this->graphXY = graphXY;
-		this->deletingFromEnd = deletingFromEnd;
 		LOG4CPLUS_ERROR(logger,"Injected DeletePoint Command Work with Mocks in test");
-		deletePointCommand = new DeletePointCommand(graphXY,deletingFromEnd);
+		this->deletePointCommand = deletePointCommand;
 	}
-
+	void setLogLevel(log4cplus::LogLevel logLevel ) {
+		logger.setLogLevel(logLevel);
+	}
 	GraphXY* getGraphXYResult();
 	GraphXY*  deleteBadPointsFromBeginingOrFromEnd( );
-	void setDirectionForDeleting(bool deletingFromEnd);
 
 	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
 	void nextIteration();

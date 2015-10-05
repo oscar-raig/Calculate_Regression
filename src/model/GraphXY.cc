@@ -3,8 +3,19 @@
 
 GraphXY::GraphXY(double *x, double *y, int size) {
 	for(int i = 0; i < size; i++){
-		addPoint(new PointXY(x[i],y[i]));
+		PointXY pointXY(x[i],y[i]);
+		addPoint(&pointXY);
+		//delete pointXY;
 	}
+}
+
+GraphXY::~GraphXY(){
+	std::vector<PointXY>::iterator it;
+	it = graph.begin() ;
+	while (it != graph.end()) {
+		 it = graph.erase(it);
+	}
+	
 }
 
 int GraphXY::getSize() {

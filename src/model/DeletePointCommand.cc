@@ -12,7 +12,7 @@ void DeletePointCommand::setParameters(GraphXY* graphXY,bool removeEnd){
 DeletePointCommand::DeletePointCommand(GraphXY* graphXY,bool removeEnd ) {
 	this->graphXY = graphXY;
 	this->removeEnd = removeEnd;
-
+	logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
 }
 
 
@@ -24,14 +24,17 @@ GraphXY* DeletePointCommand::execute() {
 	GraphXYIterator *iterator = graphXY->createIterator(0);
 
 	if (removeEnd) {
+			LOG4CPLUS_DEBUG(logger,"DeletePointCommand::execute going to end");
 			iterator->end();
 	}
 	PointXY *pointXY = iterator->current();
 	if ( pointXY == NULL) {
 		throw std::runtime_error( "ERROR: Getting point" );
 	}
+	LOG4CPLUS_DEBUG(logger,"DeletePointCommand::execute " << pointXY->getX());
 	pointStack.push(*pointXY);
 	graphXY->erase(iterator);
+	delete iterator;
 	return graphXY;
 }
 

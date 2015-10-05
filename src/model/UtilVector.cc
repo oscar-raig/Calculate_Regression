@@ -10,33 +10,30 @@ using namespace std;
 #define MAX_TIMES_EQUAL 1
 
 GraphXY* UtilVector::getGraphXYResult() {
-	return graphXY;
+
+	return deletePointCommand->getGraphXY();
 }
 
-void UtilVector::setDirectionForDeleting(bool deletingFromEnd) {
-		this->deletingFromEnd = deletingFromEnd;			
-	}
+
 
 
 void UtilVector::nextIteration()
 {
+	LOG4CPLUS_DEBUG(logger,"UtilVector::nextIteration>>");
 	deletePointCommand->execute();
-	LOG4CPLUS_DEBUG(logger,"UtilVector::nextIteration size: " << graphXY->getSize());
+	LOG4CPLUS_DEBUG(logger,"UtilVector::nextIteration<<");
 
 }
 
 void UtilVector::restoreDeletedValues(int numberElementsToRecover)
 {
-	LOG4CPLUS_DEBUG(logger,"UtilVector::restoreDeletedValues size: " << graphXY->getSize());
 	deletePointCommand->undo(numberElementsToRecover);
-	LOG4CPLUS_DEBUG(logger,"UtilVector::restoreDeletedValues size: " << graphXY->getSize());
 }
 
 Maths::Regression::Linear UtilVector::calculateRegression(){
 
 	LOG4CPLUS_DEBUG(logger,"UtilVector::calculateRegression>>");
-
-	LOG4CPLUS_ERROR(logger,"TODO: change malloc for new");
+	GraphXY *graphXY = deletePointCommand->getGraphXY();
 
 	double *xx = new double[graphXY->getSize()];
 	double *yy = new double[graphXY->getSize()];
@@ -56,8 +53,9 @@ Maths::Regression::Linear UtilVector::calculateRegression(){
 
 
 	Maths::Regression::Linear A( graphXY->getSize(), xx, yy );
-	delete xx;
-	delete yy;
+	delete []xx;
+	delete []yy;
+	delete it;
 	LOG4CPLUS_DEBUG(logger,"UtilVector::calculateRegression<<");
 	return A;
 }
@@ -68,6 +66,7 @@ bool UtilVector::decideWithCoeffiecient(int result) {
 		timesWorst++;
 		if ( timesWorst > MAX_TIMES_WORST ) {
 				restoreDeletedValues(timesWorst);
+				LOG4CPLUS_DEBUG(logger,"UtilVector::decideWithCoeffiecient true due to MAX_TIMES_WORST");
 		        return true;
 		}
            
@@ -76,6 +75,8 @@ bool UtilVector::decideWithCoeffiecient(int result) {
         timesEqual++;
         if( timesEqual > MAX_TIMES_EQUAL ) {
         	restoreDeletedValues(timesEqual);
+        	LOG4CPLUS_DEBUG(logger,"UtilVector::decideWithCoeffiecient true due to MAX_TIMES_EQUAL");
+		        return true;
 			return true;
 
         }
@@ -98,19 +99,21 @@ GraphXY*  UtilVector::deleteBadPointsFromBeginingOrFromEnd()
 	Maths::Regression::Linear regression = calculateRegression();
 	CoefficientOld = regression.getCoefficient( );
 	nextIteration();
-
+	GraphXY *graphXY = deletePointCommand->getGraphXY();
     while(graphXY->getSize() > 1) {
-
+    		LOG4CPLUS_DEBUG(logger,"UtilVector::deleteBadPointsFromBeginingOrFromEnd " << graphXY->getSize() );
         Maths::Regression::Linear regression = calculateRegression();
         CoefficientCurrent = regression.getCoefficient();
         int result = UtilVector::coefficientGetWorst( CoefficientOld , CoefficientCurrent );
      	if(decideWithCoeffiecient(result)) {
+     		LOG4CPLUS_DEBUG(logger,"UtilVector::deleteBadPointsFromBeginingOrFromEnd exiting");
      		break;
      	}
 
 	    CoefficientOld = CoefficientCurrent;
 		nextIteration( );
     }
+
 	return graphXY;
   	
 }

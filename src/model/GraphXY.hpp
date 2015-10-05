@@ -9,6 +9,7 @@ class GraphXY {
 public:	
 	GraphXY(){};
 	GraphXY(double *x, double *y, int size);
+	~GraphXY();
 	int getSize();
 
 	void addPoint(PointXY *pointXY);
