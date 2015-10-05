@@ -130,9 +130,9 @@ int main( int argc, char *argv[] )
 	cout << "We have " << nSize << " elements" << endl;
 
 
-
-	UtilVector utilVector(x, y, nSize,true);  
 	GraphXY graphXY(x, y, nSize);
+	UtilVector utilVector(&graphXY,true);  
+	
 	PurgeGraphXY purgeGraphXY(&graphXY);
 	purgeGraphXY.purgeSimilarConsecutiveElements();
 	

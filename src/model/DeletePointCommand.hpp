@@ -9,6 +9,8 @@ private:
 	GraphXY* graphXY;
 
 public:
+	DeletePointCommand(){};
+	void setParameters(GraphXY* graphXY,bool removeEnd);
 	DeletePointCommand(GraphXY* graphXY,bool removeEnd);
 	GraphXY* execute();
 	GraphXY* undo(int numberElementsToRecover);

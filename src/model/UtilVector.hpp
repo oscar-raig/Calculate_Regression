@@ -23,12 +23,12 @@ class UtilVector {
     int		timesEqual;
 
 public:	
-	UtilVector(double *x, double *y, int sizeOfArray,bool deletingFromEnd){
+	UtilVector(GraphXY *graphXY, bool deletingFromEnd){
 		logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
 		logger.setLogLevel(INFO_LOG_LEVEL);
-		graphXY = new GraphXY(x,y,sizeOfArray);
+		this->graphXY = graphXY;
 		this->deletingFromEnd = deletingFromEnd;
-		LOG4CPLUS_ERROR(logger,"TODO: Inject DeletePointCommand and Work with Mocks in test");
+		LOG4CPLUS_ERROR(logger,"Injected DeletePoint Command Work with Mocks in test");
 		deletePointCommand = new DeletePointCommand(graphXY,deletingFromEnd);
 	}
 

@@ -3,6 +3,12 @@
 #include <stdexcept> 
 
 
+
+void DeletePointCommand::setParameters(GraphXY* graphXY,bool removeEnd){
+	this->graphXY = graphXY;
+	this->removeEnd = removeEnd;
+}
+
 DeletePointCommand::DeletePointCommand(GraphXY* graphXY,bool removeEnd ) {
 	this->graphXY = graphXY;
 	this->removeEnd = removeEnd;

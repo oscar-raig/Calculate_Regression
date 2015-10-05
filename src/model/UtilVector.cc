@@ -37,8 +37,9 @@ Maths::Regression::Linear UtilVector::calculateRegression(){
 	LOG4CPLUS_DEBUG(logger,"UtilVector::calculateRegression>>");
 
 	LOG4CPLUS_ERROR(logger,"TODO: change malloc for new");
-	double *xx = (double*) malloc(sizeof(double)*graphXY->getSize());
-	double *yy = (double*)malloc(sizeof(double)*graphXY->getSize());
+
+	double *xx = new double[graphXY->getSize()];
+	double *yy = new double[graphXY->getSize()];
 	GraphXYIterator *it = graphXY->createIterator(0);
 	PointXY * pointXY = it->current();
 	int vectorPosition = 0;
@@ -55,7 +56,8 @@ Maths::Regression::Linear UtilVector::calculateRegression(){
 
 
 	Maths::Regression::Linear A( graphXY->getSize(), xx, yy );
-	LOG4CPLUS_ERROR(logger,"TODO: delete xx,yy");
+	delete xx;
+	delete yy;
 	LOG4CPLUS_DEBUG(logger,"UtilVector::calculateRegression<<");
 	return A;
 }
