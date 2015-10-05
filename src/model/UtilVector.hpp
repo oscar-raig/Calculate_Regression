@@ -15,32 +15,31 @@ using namespace log4cplus;
 #define COEFFICIENT_EQUAL  2
 
 class UtilVector {
-	Logger logger;
+	Logger 	logger;
 	GraphXY *graphXY;
-	bool deletingFromEnd;
+	bool 	deletingFromEnd;
 	DeletePointCommand *deletePointCommand;
 	int 	timesWorst;
     int		timesEqual;
-    int *end;
+
 public:	
 	UtilVector(double *x, double *y, int sizeOfArray,bool deletingFromEnd){
 		logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
 		logger.setLogLevel(INFO_LOG_LEVEL);
 		graphXY = new GraphXY(x,y,sizeOfArray);
 		this->deletingFromEnd = deletingFromEnd;
+		LOG4CPLUS_ERROR(logger,"TODO: Inject DeletePointCommand and Work with Mocks in test");
 		deletePointCommand = new DeletePointCommand(graphXY,deletingFromEnd);
 	}
 
-	GraphXY* getGraphXYResult() {
-		return graphXY;
-	}
+	GraphXY* getGraphXYResult();
+	GraphXY*  deleteBadPointsFromBeginingOrFromEnd( );
+	void setDirectionForDeleting(bool deletingFromEnd);
+
 	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
 	void nextIteration();
 	void restoreDeletedValues(int numberElementsToRecover);
-	GraphXY*  deleteBadPointsFromBeginingOrFromEnd( );
-	void setDirectionForDeleting(bool deletingFromEnd) {
-		this->deletingFromEnd = deletingFromEnd;			
-	}
+
 
 private:
 	bool decideWithCoeffiecient(int result);
