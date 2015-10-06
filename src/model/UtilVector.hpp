@@ -10,17 +10,17 @@ using namespace log4cplus;
 
 
 #define MAXIM_DIFFERENCE_BETWEEN_TWO_COEFFICIENT 0.000001
-#define COEFFICIENT_WORST  0
-#define COEFFICIENT_BETTER 1
-#define COEFFICIENT_EQUAL  2
+
 
 class UtilVector {
+	
 	Logger 	logger;
 	DeletePointCommand *deletePointCommand;
 	int 	timesWorst;
     int		timesEqual;
 
 public:	
+	enum CompareCoefficients { COEFFICIENT_EQUAL, COEFFICIENT_BETTER, COEFFICIENT_WORST };
 	UtilVector(DeletePointCommand *deletePointCommand){
 		logger = Logger::getInstance(LOG4CPLUS_TEXT("UtilVector"));
 		logger.setLogLevel(INFO_LOG_LEVEL);
@@ -33,13 +33,13 @@ public:
 	GraphXY* getGraphXYResult();
 	GraphXY*  deleteBadPointsFromBeginingOrFromEnd( );
 
-	int  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
+	CompareCoefficients  coefficientGetWorst( double OldCoefficient, double CurrentCoefficient );
 	void nextIteration();
 	void restoreDeletedValues(int numberElementsToRecover);
 
 
 private:
-	bool decideWithCoeffiecient(int result);
+	bool decideWithCoeffiecient(CompareCoefficients result);
 	Maths::Regression::Linear calculateRegression();
 };
 

@@ -60,9 +60,8 @@ Maths::Regression::Linear UtilVector::calculateRegression(){
 	return A;
 }
 
-bool UtilVector::decideWithCoeffiecient(int result) {
-	LOG4CPLUS_ERROR(logger,"TODO: create ENUM for COEFFCIENT_WORST ...");
-   	if ( COEFFICIENT_WORST == result  ) {
+bool UtilVector::decideWithCoeffiecient(CompareCoefficients compareCoefficients) {
+   	if ( COEFFICIENT_WORST == compareCoefficients  ) {
 		timesWorst++;
 		if ( timesWorst > MAX_TIMES_WORST ) {
 				restoreDeletedValues(timesWorst);
@@ -70,7 +69,7 @@ bool UtilVector::decideWithCoeffiecient(int result) {
 		        return true;
 		}
            
-    } else if (result == COEFFICIENT_EQUAL) {
+    } else if (compareCoefficients == COEFFICIENT_EQUAL) {
        	timesWorst=0;
         timesEqual++;
         if( timesEqual > MAX_TIMES_EQUAL ) {
@@ -80,7 +79,7 @@ bool UtilVector::decideWithCoeffiecient(int result) {
 			return true;
 
         }
-	} else if ( result == COEFFICIENT_BETTER) {
+	} else if ( compareCoefficients == COEFFICIENT_BETTER) {
 		timesWorst=0;
 	}
 	return false;
@@ -104,8 +103,8 @@ GraphXY*  UtilVector::deleteBadPointsFromBeginingOrFromEnd()
     		LOG4CPLUS_DEBUG(logger,"UtilVector::deleteBadPointsFromBeginingOrFromEnd " << graphXY->getSize() );
         Maths::Regression::Linear regression = calculateRegression();
         CoefficientCurrent = regression.getCoefficient();
-        int result = UtilVector::coefficientGetWorst( CoefficientOld , CoefficientCurrent );
-     	if(decideWithCoeffiecient(result)) {
+        CompareCoefficients compareCoefficients = UtilVector::coefficientGetWorst( CoefficientOld , CoefficientCurrent );
+     	if(decideWithCoeffiecient(compareCoefficients)) {
      		LOG4CPLUS_DEBUG(logger,"UtilVector::deleteBadPointsFromBeginingOrFromEnd exiting");
      		break;
      	}
@@ -122,7 +121,7 @@ GraphXY*  UtilVector::deleteBadPointsFromBeginingOrFromEnd()
 
 
 
-int UtilVector::coefficientGetWorst( double OldCoefficient, double CurrentCoefficient )
+UtilVector::CompareCoefficients UtilVector::coefficientGetWorst( double OldCoefficient, double CurrentCoefficient )
 {
 
 	if(OldCoefficient == CurrentCoefficient) {
