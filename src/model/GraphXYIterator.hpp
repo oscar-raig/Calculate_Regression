@@ -12,6 +12,7 @@ using namespace log4cplus;
 class GraphXYIterator {
 friend class GraphXY;
 private:
+	bool allocatedMemory;
 	Logger 	logger;
 	int position;
 	std::vector<PointXY> *graph;
@@ -26,6 +27,7 @@ GraphXYIterator(std::vector<PointXY> *graph,int position){
 		this->graph = graph;
 		this->position = position;
 		iterator = graph->begin() + position;
+		allocatedMemory = false;
 	}
 ~GraphXYIterator();
 

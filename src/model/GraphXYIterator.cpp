@@ -9,16 +9,20 @@ GraphXYIterator::GraphXYIterator(std::vector<double> x,std::vector<double> y, in
 	logger = Logger::getInstance(LOG4CPLUS_TEXT("GraphXYIterator"));
 	graph = new std::vector<PointXY>;
 	for(int i =0; i < graphSize; i++) {
-		PointXY *point = new PointXY(x[i], y[i]);
-		graph->push_back(*point);
+		PointXY point(x[i], y[i]);
+		graph->push_back(point);
 	}
 	iterator = graph->begin();
 	position = 0;
+	allocatedMemory = true;
 
 }
 
 GraphXYIterator::~GraphXYIterator() {
-		LOG4CPLUS_ERROR(logger,"TODO Delete something PointXY and vector");
+
+	if( allocatedMemory) {
+		delete graph;
+	}
 }
 
 

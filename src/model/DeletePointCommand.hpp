@@ -22,6 +22,7 @@ public:
 	};
 	void setParameters(GraphXY* graphXY,bool removeEnd);
 	DeletePointCommand(GraphXY* graphXY,bool removeEnd);
+	~DeletePointCommand();
 	GraphXY* execute();
 	GraphXY* undo(int numberElementsToRecover);
 	GraphXY* getGraphXY(){

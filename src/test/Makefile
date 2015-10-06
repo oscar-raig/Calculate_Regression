@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := test
 SRC_MODEL=../model/
 INCLUDE=$(SRC_MODEL)
-CFLAGS = -Wall  $(DEBUG) -I$(INCLUDE)
+CFLAGS = -Wall  $(DEBUG) -I$(INCLUDE) -g
 LFLAGS = -llog4cplus -L $GTEST_HOME/lib -lgtest -lgtest_main -lpthread
 
 TARGET_UTILVECTOR_TEST=UtilVectorTest
@@ -12,7 +12,7 @@ INCLUDE_FILES=$(SRC_MODEL)UtilVector.hpp $(SRC_MODEL)GraphXY.hpp
 
 TARGET_GRAPHXY_ITERATOR_TEST=GraphXYIteratorTest
 SOURCES_GRAPHXY_ITERATOR_TEST=GraphXYIteratorTest.cc 
-SOURCES_GRAPHXY_ITERATOR_TEST=$(SRC_MODEL)GraphXYIterator.cpp
+SOURCES_GRAPHXY_ITERATOR_TEST+=$(SRC_MODEL)GraphXYIterator.cpp
 SOURCES_GRAPHXY_ITERATOR_TEST+=$(SRC_MODEL)GraphXY.cc  GraphXYTest.cc DeletePointCommndTest.cc 
 SOURCES_GRAPHXY_ITERATOR_TEST+=$(SRC_MODEL)DeletePointCommand.cc 
 INCLUDE_FILES_GRAPHXY_ITERATOR_TEST=$(SRC_MODEL)GraphXYIterator.hpp
@@ -32,9 +32,10 @@ $(TARGET_PURGE_GRAPHXY_TEST): $(SOURCES_PURGE_GRAPHXY_TEST)
 	g++ $(CFLAGS) $(LFLAGS) -L $GTEST_HOME/lib -lgtest -lgtest_main -lpthread $(SOURCES_PURGE_GRAPHXY_TEST) -o $(TARGET_PURGE_GRAPHXY_TEST)
 
 valgrind_test:
-	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ valgrind --error-exitcode=1 --leak-check=full -v ./$(TARGET_UTILVECTOR_TEST) 
-	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ valgrind --error-exitcode=1 --leak-check=full -v ./$(TARGET_GRAPHXY_ITERATOR_TEST)
- 
+	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ valgrind --error-exitcode=1 --leak-check=full --read-var-info=yes  ./$(TARGET_UTILVECTOR_TEST) 
+	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ valgrind --error-exitcode=1 --leak-check=full --read-var-info=yes  ./$(TARGET_GRAPHXY_ITERATOR_TEST)
+ 	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ valgrind --error-exitcode=1 --leak-check=full --read-var-info=yes  ./$(TARGET_PURGE_GRAPHXY_TEST)
+
 test: $(TARGET_UTILVECTOR_TEST) $(TARGET_GRAPHXY_ITERATOR_TEST) $(TARGET_PURGE_GRAPHXY_TEST)
 	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ ./$(TARGET_UTILVECTOR_TEST)
 	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ ./$(TARGET_GRAPHXY_ITERATOR_TEST)
@@ -47,5 +48,6 @@ test_purge: $(TARGET_PURGE_GRAPHXY_TEST)
 	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ ./$(TARGET_PURGE_GRAPHXY_TEST)	
 
 clean:
-	rm -Rf $(TARGET_UTILVECTOR_TEST)
+	rm -Rf $(TARGET_UTILVECTOR_TEST)  $(TARGET_PURGE_GRAPHXY_TEST)	  $(TARGET_GRAPHXY_ITERATOR_TEST)
+
 	rm -Rf *.o

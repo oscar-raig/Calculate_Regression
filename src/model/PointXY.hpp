@@ -16,6 +16,9 @@ public:
 		return y;;
 
 	}
+	~PointXY(){
+		
+	}
 
 };
 
