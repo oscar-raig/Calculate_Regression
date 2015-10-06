@@ -3,6 +3,8 @@
 
 #include "PointXY.hpp"
 #include "GraphXYIterator.hpp"
+#include <log4cplus/logger.h>
+#include <log4cplus/loggingmacros.h>
 
 class GraphXY {
 	std::vector<PointXY> graph;

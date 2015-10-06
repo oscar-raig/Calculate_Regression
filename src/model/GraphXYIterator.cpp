@@ -6,7 +6,7 @@
 using namespace std;
 
 GraphXYIterator::GraphXYIterator(std::vector<double> x,std::vector<double> y, int graphSize ) {
-	
+	logger = Logger::getInstance(LOG4CPLUS_TEXT("GraphXYIterator"));
 	graph = new std::vector<PointXY>;
 	for(int i =0; i < graphSize; i++) {
 		PointXY *point = new PointXY(x[i], y[i]);
@@ -15,6 +15,10 @@ GraphXYIterator::GraphXYIterator(std::vector<double> x,std::vector<double> y, in
 	iterator = graph->begin();
 	position = 0;
 
+}
+
+GraphXYIterator::~GraphXYIterator() {
+		LOG4CPLUS_ERROR(logger,"TODO Delete something PointXY and vector");
 }
 
 

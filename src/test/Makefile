@@ -33,7 +33,7 @@ $(TARGET_PURGE_GRAPHXY_TEST): $(SOURCES_PURGE_GRAPHXY_TEST)
 
 valgrind_test:
 	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ valgrind --error-exitcode=1 --leak-check=full -v ./$(TARGET_UTILVECTOR_TEST) 
-
+	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ valgrind --error-exitcode=1 --leak-check=full -v ./$(TARGET_GRAPHXY_ITERATOR_TEST)
  
 test: $(TARGET_UTILVECTOR_TEST) $(TARGET_GRAPHXY_ITERATOR_TEST) $(TARGET_PURGE_GRAPHXY_TEST)
 	LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/lib/ ./$(TARGET_UTILVECTOR_TEST)
