@@ -6,10 +6,10 @@ services:
   - docker
 
 before_install:
-- docker pull oscarraig/c7-boost-gtest
+  - docker pull oscarraig/c7-boost-gtest
 
 script:
-- docker run -v `pwd`:/home/ oscarraig/c7-boost-gtest  /bin/sh -c "cd /home; ./configure && make && make test"
+  - docker run -v `pwd`:/home/ oscarraig/c7-boost-gtest  /bin/sh -c "cd /home; ./configure && make && make test"
 
 after_success:
-  - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
+  - /usr/bin/coveralls --exclude lib --exclude tests --gcov-options '\-lp'
