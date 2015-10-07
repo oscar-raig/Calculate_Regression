@@ -18,3 +18,21 @@ Example:
 Pairs (1,1) (2,2) ( 3,3 ) (4,7) (5,5) (6,6)
 
 Should delete (4,7)
+
+
+Design Patterns:
+	
+	- Command , undo Command
+
+SOLID principles:
+	- Dependency Injection
+
+Continous Integration:
+	- Travis, Coveralls
+
+Testing:
+	- Valgrind: memory leaks
+	- Unit testing with google test
+
+Technology:
+	- Docker, c++
