@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := test
 SRC_MODEL=../model/
 INCLUDE=$(SRC_MODEL)
-CFLAGS = -Wall  $(DEBUG) -I$(INCLUDE) -g
+CFLAGS = -Wall  $(DEBUG) -I$(INCLUDE) -g -fprofile-arcs -ftest-coverage
 LFLAGS = -llog4cplus -L $GTEST_HOME/lib -lgtest -lgtest_main -lpthread
 
 TARGET_UTILVECTOR_TEST=UtilVectorTest
@@ -51,3 +51,6 @@ clean:
 	rm -Rf $(TARGET_UTILVECTOR_TEST)  $(TARGET_PURGE_GRAPHXY_TEST)	  $(TARGET_GRAPHXY_ITERATOR_TEST)
 
 	rm -Rf *.o
+	rm -Rf *.gcov
+	rm -Rf *.gcda
+	rm -Rf *.gcno
