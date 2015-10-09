@@ -9,7 +9,7 @@ before_install:
   - docker pull oscarraig/c7-boost-gtest
 
 script:
-  - docker run -v `pwd`:/home/ oscarraig/c7-boost-gtest  /bin/sh -c "cd /home; ./configure && make && make test && coveralls --verbose --exclude lib --exclude tests --gcov-options '\-lp'"
+  - docker run -v `pwd`:/home/ oscarraig/c7-boost-gtest  /bin/sh -c "cd /home; ./configure && make && make test "
 
 after_success:
   - docker run -v `pwd`:/home/ oscarraig/c7-boost-gtest  /bin/sh -c "cd /home; coveralls --exclude lib --exclude tests --gcov-options '\-lp' --verbose"
